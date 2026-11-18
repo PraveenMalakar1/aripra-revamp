@@ -1,0 +1,51 @@
+/* Aripra — Case Studies page (layout: Figma 686:145; copy: AW-5).
+   Page-specific styles (.cs-*); hero is the shared PageHero. */
+
+.cs-hero-lead { margin: 0; color: var(--brand-ink); font-size: 16px; line-height: 1.5; text-wrap: balance; }
+
+.cs-grid-section { padding: 80px 0 96px; }
+.cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-block: 0; padding: 0; list-style: none; }
+
+.cs-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px #E8E8ED; transition: box-shadow 200ms ease, transform 200ms var(--ease-out-soft); }
+.cs-card-media { position: relative; align-self: stretch; aspect-ratio: 1680 / 960; /* the logo images' shape: never cropped */ border-radius: 12px; overflow: hidden; background: #F4F4F5; }
+.cs-card-media img { object-fit: cover; transition: transform 600ms var(--ease-out-soft); }
+.cs-card-media { margin-bottom: 4px; }
+.cs-card-client { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 13px; line-height: 1.4; }
+.cs-card-client-tag { padding: 3px 10px; border-radius: 9999px; background: var(--brand-navy); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+.cs-card-project { color: var(--brand-navy); font-weight: 700; }
+.cs-card-title { margin: 0; color: var(--brand-navy); font-size: 19px; font-weight: 600; line-height: 1.4; text-wrap: balance; }
+.cs-card-tags { margin: 0; color: #6C47FF; font-size: 11.5px; font-weight: 600; line-height: 1.5; letter-spacing: 0.04em; text-transform: uppercase; }
+.cs-card-tags span { margin-inline: 4px; color: #C9BCFF; }
+.cs-card-context { margin: 0; color: var(--brand-ink); font-size: 14px; line-height: 1.5; text-wrap: pretty; }
+/* key stat: pushed to the bottom so stats line up across a row */
+.cs-card-stat { align-self: stretch; margin: auto 0 0; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: #FAF7FF; box-shadow: inset 0 0 0 1px #EDE8FF; color: var(--brand-navy); font-size: 14px; font-weight: 600; line-height: 1.45; text-wrap: pretty; }
+.cs-card-stat-label { color: var(--brand-orange); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.cs-card-cta { color: #6C47FF; font-size: 14px; font-weight: 600; line-height: 1.5; }
+.cs-card-cta.is-soon { color: #A1A1AA; cursor: default; }
+
+/* "and many more" tile: the grid's last slot, as tall as the cards beside it */
+.cs-more { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 32px 28px; border-radius: 16px; background: linear-gradient(135deg, #F7F3FF, #EFE9FF); box-shadow: inset 0 0 0 1px #E6DEFF; text-align: center; }
+.cs-more-text { max-width: 340px; margin: 0; color: var(--brand-ink); font-size: 18px; line-height: 1.55; text-wrap: balance; }
+.cs-more-text strong { color: var(--brand-navy); }
+
+/* whole card clickable once a detail page exists (stretched title link) */
+.cs-card-link { color: inherit; }
+.cs-card-link::after { content: ''; position: absolute; inset: 0; border-radius: 16px; }
+.cs-card-link:focus-visible { outline: none; }
+.cs-card:has(.cs-card-link:focus-visible) { box-shadow: inset 0 0 0 2px var(--brand-orange); }
+.cs-card:has(.cs-card-link):hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px #C9BCFF, 0 12px 28px rgba(88, 53, 232, 0.1); }
+.cs-card:has(.cs-card-link):hover .cs-card-media img { transform: scale(1.04); }
+
+@media (max-width: 1100px) { .cs-grid { grid-template-columns: 1fr 1fr; gap: 24px; } }
+@media (max-width: 720px) {
+  .cs-grid-section { padding: 56px 0 64px; }
+  .cs-more { padding: 32px 20px; }
+  .cs-more-text { font-size: 16px; }
+  .cs-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .cs-card, .cs-card-media img { transition: none; } }
+/* first row is part of the first screen: it rises in on load with the hero
+   instead of waiting for a scroll (it looked like empty boxes; founders) */
+@media (prefers-reduced-motion: no-preference) {
+  .cs-card:nth-child(-n+3) { animation: hm-rise 800ms var(--ease-out-soft) 350ms both; }
+}
