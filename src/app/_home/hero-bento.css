@@ -1,0 +1,90 @@
+/* ---- homepage hero, "Odometer" (HeroBento.jsx; founders' final pick,
+   2026-11-05) ----
+   White background with soft lavender glows at the sides. Text 60% on the
+   left, the video 40% on the right, inside the navbar's width; on desktop the
+   video is as tall as the text column. Tablet/phone: stacked and centred, the
+   video between the text and the CTAs (the text column dissolves into the
+   grid). */
+
+@property --hfb-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+.hfb {
+  padding-top: calc(var(--site-header-h, 82px) - 11px + 28px);
+  padding-bottom: calc(40px + var(--scue-room, 0px));
+  background: #fff;
+}
+.hfb .scue { color: #0B0B0F; }
+
+/* text */
+.hfb-split { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; gap: clamp(32px, 4vw, 64px); width: min(1320px, 100% - 2 * var(--site-edge)); margin: 0 auto; text-align: left; } /* lines up with the nav bar */
+.hfb-split-text { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.hfb-title { margin: 0; color: #0B0B0F; font-size: clamp(44px, 4.6vw, 68px); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; text-wrap: balance; }
+.hfb-title-line { display: block; } /* each headline line on its own line, same size */
+/* subheading: grey, with a slow sheen running through it */
+.hfb-sub { max-width: 640px; margin: 0; font-size: clamp(20px, 1.8vw, 26px); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; text-wrap: balance; }
+.hfb-sheen { background: linear-gradient(90deg, #6B6B73 0%, #6B6B73 35%, #A1A1AA 50%, #6B6B73 65%, #6B6B73 100%) 0 0 / 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: hfb-sheen 8s linear infinite; }
+.hfb-into { margin: 0; color: #3F3F46; font-size: 17px; line-height: 1.5; }
+.hfb-ctas { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 12px; margin-top: 10px; }
+
+/* video */
+.hfb-card { position: relative; border-radius: 22px; }
+.hfb-media .hf-video-frame { width: 100%; height: auto; border-radius: 22px; box-shadow: 0 20px 40px rgba(11, 11, 15, 0.14); }
+.hfb-media .vp-play { width: 68px; height: 68px; background: var(--brand-orange); box-shadow: none; backdrop-filter: none; animation: hfb-ring 2.4s ease-out infinite; }
+
+/* soft lavender glows breathing at the sides (as in the Opendeo reference) */
+.hfb-glow { position: absolute; z-index: 0; top: 8%; width: 36vw; max-width: 560px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(167, 139, 250, 0.4), transparent); filter: blur(40px); pointer-events: none; animation: hfb-breathe 9s ease-in-out infinite alternate; }
+.hfb-glow.is-left { left: -8vw; }
+.hfb-glow.is-right { right: -8vw; top: 20%; animation-delay: -4.5s; }
+
+/* screen-reader-only text (the real words behind the animated number) */
+.hfb-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* £200M in brand violet, its digits rolling in once */
+.hfb-odo-amount { background: linear-gradient(90deg, #6C47FF, #A855F7 55%, var(--brand-orange)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hfb-odo { display: inline-flex; }
+.hfb-odo-win { display: inline-block; height: 1.06em; overflow: hidden; vertical-align: top; }
+.hfb-odo-reel { display: flex; flex-direction: column; animation: hfb-odo 1.9s cubic-bezier(0.16, 0.84, 0.24, 1) calc(500ms + var(--i) * 180ms) both; }
+.hfb-odo-reel > span { display: block; height: 1.06em; line-height: 1.06em; text-align: center; color: #6C47FF; } /* each digit paints its own colour, stepping along the gradient */
+.hfb-odo-win:nth-child(2) .hfb-odo-reel > span { color: #8B5CF6; }
+.hfb-odo-win:nth-child(3) .hfb-odo-reel > span { color: #A855F7; }
+.hfb-odo-win:nth-child(4) .hfb-odo-reel > span { color: #C04FE0; }
+
+/* a light running round the video, and a soft glow behind it */
+.hfb-media.is-glow::before { content: ''; position: absolute; z-index: 2; inset: -3px; padding: 3px; border-radius: 25px; background: conic-gradient(from var(--hfb-a), rgba(108, 71, 255, 0.15) 0deg, rgba(108, 71, 255, 0.15) 220deg, #A855F7 270deg, var(--brand-orange) 320deg, rgba(108, 71, 255, 0.15) 360deg); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; animation: hfb-spin 5s linear infinite; }
+.hfb-media.is-glow::after { content: ''; position: absolute; z-index: -1; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(168, 85, 247, 0.45), transparent); filter: blur(40px); animation: hfb-breathe 6s ease-in-out infinite alternate; pointer-events: none; }
+
+@keyframes hfb-spin { to { --hfb-a: 360deg; } }
+@keyframes hfb-sheen { to { background-position: -200% 0; } }
+@keyframes hfb-ring { 0% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(255, 85, 0, 0); } }
+@keyframes hfb-breathe { from { opacity: 0.55; transform: translate(0, 0) scale(0.9); } to { opacity: 1; transform: translate(3vw, 4vh) scale(1.1); } }
+@keyframes hfb-odo { from { transform: translateY(0); } to { transform: translateY(calc(var(--stop) * -1.06em)); } }
+
+/* desktop: subheading on one line; the video as tall as the text column
+   (founders, 2026-11-04). The frame then fills the column and the video
+   crops to it (object-fit: cover; the speaker stays centred). */
+@media (min-width: 1101px) {
+  .hfb-split { align-items: stretch; }
+  .hfb-sub { max-width: none; font-size: clamp(18px, 1.6vw, 26px); white-space: nowrap; }
+  .hfb-media, .hfb-media .hf-video { display: flex; }
+  .hfb-media .hf-video-frame { aspect-ratio: auto; height: 100%; min-height: 300px; }
+}
+@media (max-width: 1100px) {
+  .hfb-split { grid-template-columns: 1fr; justify-items: center; gap: 18px; text-align: center; }
+  .hfb-split-text { display: contents; }
+  .hfb-media { order: 1; width: min(100%, 600px); margin-top: 8px; }
+  .hfb-ctas { order: 2; justify-content: center; margin-top: 8px; }
+}
+@media (min-width: 721px) and (max-width: 1100px) { .hfb { padding-bottom: 76px; } }
+@media (max-width: 720px) {
+  .hfb-title { font-size: 36px; }
+  .hfb-sub { font-size: 18px; }
+  .hfb-into { font-size: 15px; }
+  .hfb-ctas { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
+  .hfb-media .vp-play { width: 56px; height: 56px; }
+  .hfb-glow { width: 70vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hfb-sheen, .hfb-media .vp-play, .hfb-glow, .hfb-media.is-glow::before, .hfb-media.is-glow::after { animation: none; }
+  .hfb-odo-reel { animation-duration: 1ms; animation-delay: 0ms; }
+}
