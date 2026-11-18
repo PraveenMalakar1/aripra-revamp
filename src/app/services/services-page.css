@@ -1,0 +1,170 @@
+/* Aripra — Services page (2026 Figma: "Services Page", node 457:2272).
+   Page-specific styles (.sv-*); shared building blocks are in
+   _shared/shared.css (hero: PageHero / .pg-hero). */
+
+/* ---- 1. hero (lead copy only; the rest is the shared PageHero) ---- */
+.sv-hero-lead { margin: 0; color: var(--brand-ink); font-size: 16px; line-height: 1.5; text-wrap: balance; }
+.sv-hero-lead strong { font-weight: 700; }
+
+/* ---- 2. how we build ---- */
+.sv-build { padding-top: 40px; }
+.sv-build-card > .hm-overline, .sv-build-card > h2 { align-self: center; text-align: center; } /* centred header (founders) */
+.sv-build-card { width: min(1200px, 100% - 2 * clamp(16px, 4vw, 40px)); margin-inline: auto; display: flex; flex-direction: column; gap: 30px; padding: 40px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px #E4E4E7, 0 1px 3px rgba(17, 2, 59, 0.08); }
+.sv-build-row { display: flex; align-items: flex-start; gap: 30px; }
+.sv-build-copy { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 30px; }
+.sv-build-term { flex: none; }
+
+@media (max-width: 1100px) {
+  .sv-build-row { flex-direction: column; align-items: stretch; }
+  .sv-build-term { align-self: center; width: min(414px, 100%); }
+  .sv-build-term .hm-term { width: 100%; }
+}
+@media (max-width: 720px) {
+  .sv-build-card { padding: 28px 20px; gap: 20px; }
+}
+
+/* ---- 4–7. service sections (template: ServiceSection.jsx, content: data.js).
+   Decluttered layout (client, 2026-10-09): stacked header with the
+   illustration full width, numbered situation cards (≤2 per row), What we do
+   as bold lead lines, numbered How it works steps, generous spacing. ---- */
+.sv-service { margin-top: 120px; scroll-margin-top: calc(var(--site-header-h, 82px) + 24px); }
+.sv-service:first-child { margin-top: 40px; }
+.sv-service-inner { display: flex; flex-direction: column; gap: 56px; }
+
+.sv-service-head { display: flex; flex-direction: column; gap: 16px; } /* left-aligned (founders, 2026-10-19) */
+.sv-service-eyebrow { margin: 0; display: flex; align-items: baseline; gap: 8px; color: var(--brand-orange); font-size: 15px; line-height: 1.5; }
+.sv-service-num { color: #6C47FF; font-weight: 700; font-variant-numeric: tabular-nums; }
+.sv-service-title { margin: 0; color: var(--brand-navy); font-size: 40px; font-weight: 600; line-height: 1.25; text-wrap: balance; }
+.sv-service-lead { max-width: none; /* full width of the column (founders, 2026-11-02) */ margin: 0; color: var(--brand-ink); font-size: 16px; line-height: 1.5; text-wrap: pretty; }
+/* header illustration (ServiceIllustrations.jsx, 520×250 canvas, shared .il-*
+   kit), full width; the panel paints the background so the art always fills it */
+.sv-il-compact { display: none; }
+.sv-illus { height: 300px; margin-top: 12px; padding: 8px; overflow: hidden; border-radius: 16px; background: radial-gradient(circle, #E2DAFB 1px, transparent 1.5px) 0 0 / 22px 22px, linear-gradient(160deg, #FBF9FF, #F0EBFF); }
+
+/* situation: numbered cards, at most two per row */
+.sv-situation { display: grid; grid-template-columns: repeat(var(--sv-cols, 1), minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.sv-sit-card { display: flex; flex-direction: column; gap: 12px; padding: 28px; border-radius: 16px; background: #FAF7FF; box-shadow: inset 0 0 0 1px #EDE8FF; }
+/* situation card text is 14px (client request; rest of the page 16px) */
+.sv-sit-card .hm-prose { max-width: none; font-size: 14px; } /* text spans the card's full width (founders, 2026-11-04) */
+.sv-sit-card .hm-prose p + p { margin-top: 21px; } /* one blank line at 14px */
+.sv-service .hm-prose p { white-space: pre-line; } /* honour deliberate line breaks in data.js */
+.sv-card-title { margin: 0; color: var(--brand-navy); font-size: 18px; font-weight: 600; line-height: 1.5; text-wrap: balance; }
+
+.sv-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.sv-detail-col { display: flex; flex-direction: column; gap: 24px; }
+.sv-part-title { margin: 0; color: var(--brand-navy); font-size: 24px; font-weight: 600; line-height: 1.3; }
+/* What we do: bold lead line + explanation, grouped by a thin rule */
+.sv-do { display: flex; flex-direction: column; gap: 28px; }
+.sv-do-block { display: flex; flex-direction: column; gap: 8px; max-width: 60ch; padding-left: 16px; border-left: 2px solid #EDE8FF; }
+.sv-do-lead { margin: 0; color: var(--brand-navy); font-size: 17px; font-weight: 600; line-height: 1.45; text-wrap: balance; }
+/* How it works: numbered steps */
+.sv-steps { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.sv-step { display: flex; flex-direction: column; gap: 8px; padding: 20px 24px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px #EDE8FF; }
+.sv-step-head { display: flex; align-items: center; gap: 14px; }
+.sv-step-num { flex: none; width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--brand-orange); color: #fff; font-size: 15px; font-weight: 700; }
+.sv-step-title { margin: 0; color: var(--brand-navy); font-size: 18px; font-weight: 600; line-height: 1.5; }
+.sv-step-body { margin: 0; padding-left: 46px; color: var(--brand-ink); font-size: 14px; line-height: 1.5; text-wrap: pretty; }
+
+/* "What you get" band (full-bleed, same gradient as the dark panels) */
+.sv-get { margin-top: 64px; background: var(--grad-dark); color: #fff; }
+.sv-get-inner { display: flex; align-items: flex-start; gap: 60px; padding: 60px 0; }
+.sv-get-cta { flex: 0 0 470px; /* Figma 446; +24 so the note stays on one line with browser text metrics */ display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.sv-get-title { margin: 0; font-size: 40px; font-weight: 600; line-height: 1.3; }
+.hm-btn.sv-get-btn { font-size: 14px; font-weight: 500; }
+.sv-get-action { position: relative; align-self: flex-start; margin-top: 8px; }
+/* "The first call is…": small text, always under the button (founders,
+   2026-11-13: was a hover tooltip); hidden on phones */
+.sv-get-copy .sv-get-note { margin: 9px 0 0; color: rgba(255, 255, 255, 0.45); font-size: 13px; line-height: 1.45; }
+@media (max-width: 720px) { .sv-get-copy .sv-get-note { display: none; } }
+.sv-get-copy { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 20px; font-size: 16px; line-height: 1.5; }
+.sv-get-copy p { margin: 0; white-space: pre-line; text-wrap: pretty; }
+.sv-get-copy p.is-strong { font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .sv-illus { height: auto; aspect-ratio: 960 / 300; } /* keep the wide art's shape */
+  .sv-detail { grid-template-columns: 1fr; }
+  .sv-get-inner { flex-direction: column; align-items: stretch; gap: 30px; }
+  .sv-get-cta { flex: none; }
+}
+@media (max-width: 720px) {
+  .sv-service { margin-top: 80px; }
+  /* phones: the wide drawing would shrink too far, use the compact one */
+  .sv-il-wide { display: none; }
+  .sv-il-compact { display: block; }
+  .sv-illus { aspect-ratio: 520 / 250; }
+  .sv-service-inner, .sv-detail { gap: 40px; }
+  .sv-service-title, .sv-get-title { font-size: 30px; }
+  .sv-situation { grid-template-columns: 1fr; }
+  .sv-sit-card { padding: 22px; }
+  .sv-part-title { font-size: 22px; }
+  .sv-step-body { padding-left: 0; }
+  .sv-get { margin-top: 48px; }
+  .sv-get-inner { padding: 48px 0; }
+}
+
+/* ---- services navigation: sticky sidebar (client choice — replaces the Figma
+   tab bar; component nav/ServiceSidebar.jsx). Services sit beside it. ---- */
+.sv-services--side { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 40px; width: min(1204px, 100% - 2 * clamp(16px, 4vw, 40px)); margin-inline: auto; padding-top: 10px; }
+.sv-side { position: sticky; top: calc(var(--site-header-h, 82px) + 24px); display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 16px; background: #fff; box-shadow: inset 0 0 0 1px #EDE8FF, 0 4px 16px rgba(17, 2, 59, 0.06); }
+.sv-side-label { margin: 0 0 4px; padding: 0 10px; color: var(--brand-orange); font-size: 13px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+.sv-side-list { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.sv-side-item { display: flex; gap: 10px; padding: 12px 10px; border-radius: 12px; color: var(--brand-ink); font-size: 15px; font-weight: 600; line-height: 1.35; transition: background 200ms ease, color 200ms ease; }
+.sv-side-item:hover { background: #F4F1FF; }
+.sv-side-item[aria-current="true"] { background: #5835E8; color: #fff; }
+.sv-side-num { flex: none; opacity: 0.7; }
+.sv-side-progress { height: 3px; margin: 6px 10px 2px; border-radius: 3px; background: #EDE8FF; overflow: hidden; }
+.sv-side-progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--brand-orange), #5835E8); transform-origin: left; transform: scaleX(0); }
+.sv-services--side .hm-wrap { width: 100%; }
+.sv-services--side .sv-service:first-child { margin-top: 0; }
+.sv-services--side .sv-get { border-radius: 16px; }
+.sv-services--side .sv-get-inner { gap: 40px; padding: 40px 32px; width: auto; }
+.sv-services--side .sv-get-cta { flex-basis: 330px; }
+@media (max-width: 1100px) {
+  .sv-services--side { display: block; }
+  .sv-side-wrap { display: none; }
+  /* the band stacks here: the 330px basis above would become a height and
+     leave a big empty gap under the booking note */
+  .sv-services--side .sv-get-cta { flex-basis: auto; }
+  .sv-services--side .sv-get-inner { gap: 30px; }
+}
+@media (max-width: 720px) { .sv-services--side .sv-get-inner { padding: 32px 20px; } }
+@media (prefers-reduced-motion: reduce) { .sv-side-item { transition: none; } }
+
+/* ---- services strip (≤1100px, nav/ServiceStrip.jsx): thin bar attached under
+   the navbar, like the case-study breadcrumb strip. Hidden on desktop, where
+   the sidebar does this job. Slides in only while the services are on screen. ---- */
+.sv-strip { display: none; }
+@media (max-width: 1100px) {
+  .sv-strip { display: block; position: fixed; z-index: 45; left: 0; right: 0; top: calc(var(--site-header-h, 82px) - 4px); pointer-events: none; opacity: 0; transform: translateY(-8px); transition: opacity 220ms ease, transform 260ms var(--ease-out-soft); }
+  .sv-strip[data-visible] { opacity: 1; transform: none; }
+  .sv-strip[data-visible] .sv-strip-inner { pointer-events: auto; }
+  .sv-strip-inner { position: relative; width: min(1320px, 100% - 32px); margin-inline: auto; padding: 6px; border-radius: 0 0 12px 12px; background: #fff; box-shadow: inset 0 0 0 1px #EDE8FF, 0 8px 20px rgba(17, 2, 59, 0.08); overflow: hidden; }
+  .sv-strip-list { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+  .sv-strip-list::-webkit-scrollbar { display: none; }
+  .sv-strip-list li { flex: 1 0 auto; }
+  .sv-strip-item { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 12px; border-radius: 8px; color: var(--brand-ink); font-size: 13px; font-weight: 600; line-height: 1.3; white-space: nowrap; transition: background 160ms ease, color 160ms ease; }
+  .sv-strip-item:hover { background: #F4F1FF; }
+  .sv-strip-item[aria-current="true"] { background: #5835E8; color: #fff; }
+  .sv-strip-item:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: -2px; }
+  .sv-strip-num { opacity: 0.6; font-size: 11px; font-variant-numeric: tabular-nums; }
+  .sv-strip-short { display: none; }
+  .sv-strip-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #EDE8FF; }
+  .sv-strip-progress span { display: block; height: 100%; background: linear-gradient(90deg, var(--brand-orange), #6C47FF); transform-origin: left; }
+  /* land each service below the navbar + strip */
+  .sv-service { scroll-margin-top: calc(var(--site-header-h, 82px) + 64px); }
+}
+@media (max-width: 1100px) {
+  /* full names stop fitting: short labels; the full name stays for screen readers */
+  .sv-strip-full { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .sv-strip-short { display: inline; }
+}
+@media (max-width: 480px) {
+  .sv-strip-num { display: none; }
+  .sv-strip-item { padding: 8px 6px; font-size: 12.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .sv-strip, .sv-strip-item { transition: none; } }
+
+/* ---- booking button: per-service labels are long, so allow two lines on
+   narrow screens ---- */
+@media (max-width: 720px) { .hm-btn.sv-get-btn { white-space: normal; text-align: center; } }
+
