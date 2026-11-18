@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- site-wide brand tokens (from the 2026 homepage Figma). Page
+   stylesheets may still scope their own copies; values must match. ---- */
+:root {
+  --brand-navy: #11023B;
+  --brand-violet: #321675;
+  --brand-lilac: #F4E8FF;
+  --brand-orange: #FF5500;
+  --brand-ink: #262556;
+  --brand-line: #F4F4F5;
+  --font-brand: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Max width of site content. Backgrounds may bleed past it; content, nav
+     and text never do. */
+  --site-max: 1920px;
+  /* every dark panel/band (founders, 2026-11-04: one style site-wide, the
+     violet → navy diagonal) */
+  --grad-dark: linear-gradient(120deg, #2D1470 0%, var(--brand-navy) 70%);
+  --site-gutter: 16px;
+  /* side gap of the nav bar and the homepage hero (founders, 2026-11-05:
+     they nearly touched the screen edges on 1280–1366 laptops). 16px on
+     phones, growing to 48px on laptops and up. */
+  --site-edge: clamp(16px, 3.5vw, 48px);
+  /* "Screen − peek" (founders, 2026-11-08): heroes fill the first screen
+     minus this much, so the next section's top gap plus about one line of
+     its heading shows, the same on every screen size */
+  --hero-peek: 140px;
+}
+
+/* Whole-site frame: everything (backgrounds included) is capped at
+   --site-max and centred; ultra-wide screens see neutral grey either side.
+   320px floor = narrowest real phone; below that the page scrolls instead
+   of squashing. */
+html, body { background: #EEEEF2; }
+.site-page { position: relative; width: 100%; max-width: var(--site-max); min-width: 320px; margin-inline: auto; overflow-x: clip; }
+
+/* Centred content wrapper: full-bleed parent paints the background, this
+   keeps the content inside --site-max on ultra-wide screens. */
+.site-container { width: 100%; max-width: var(--site-max); margin-inline: auto; padding-inline: var(--site-gutter); }
+
+/* ---- shared header (src/app/Nav.jsx) ---- */
+.site-header { position: sticky; top: 0; z-index: 50; padding: 11px var(--site-edge); font-family: var(--font-brand); }
+/* Frosted band behind the floating navbar: content scrolling through the
+   empty space around it (above, beside, below) is blurred. Fades out over the
+   last few px so there is no hard edge. */
+.site-header::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; backdrop-filter: blur(10px); mask-image: linear-gradient(#000 calc(100% - 6px), transparent); }
+.site-header .site-nav { position: relative; max-width: 1320px; /* Figma 1200 +10% (client request) */ height: 60px; margin: 0 auto; padding: 10px 16px; /* 16px sides (founders, 2026-10-13); 10px top/bottom keeps the bar 60px */ display: flex; align-items: center; justify-content: space-between; gap: 30px; background: #fff; border-radius: 12px; box-shadow: 0 0 0 1px #fff, 0 4px 16px rgba(17, 2, 59, 0.12); }
+.site-header .site-nav-logo { display: inline-flex; align-items: center; border-radius: 8px; }
+.site-header .site-nav-divider { width: 1px; height: 30px; background: var(--brand-line); flex: none; }
+.site-header .site-nav-links { display: flex; align-items: center; gap: 30px; margin-left: auto; } /* right-justified next to the button */
+.site-header .site-nav-link { font-size: 14px; font-weight: 500; line-height: 1.5; color: var(--brand-ink); white-space: nowrap; transition: color 160ms ease; }
+.site-header .site-nav-link:hover { color: var(--brand-navy); }
+.site-header .site-nav-link[aria-current="page"] { color: var(--brand-orange); }
+.site-header .site-nav-item { position: relative; display: inline-flex; align-items: center; gap: 2px; }
+.site-header .site-nav-sub-toggle { width: 18px; height: 22px; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--brand-ink); transition: transform 200ms var(--ease-out-soft), background 160ms ease; }
+.site-header .site-nav-sub-toggle:hover { background: var(--brand-line); }
+.site-header .site-nav-item:hover .site-nav-sub-toggle, .site-header .site-nav-item[data-open] .site-nav-sub-toggle { transform: rotate(180deg); }
+/* the panel starts right under the item; its top padding bridges the hover gap */
+.site-header .site-nav-sub { position: absolute; top: 100%; left: 50%; z-index: 2; padding-top: 18px; translate: -50% 0; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 180ms ease, transform 220ms var(--ease-out-soft), visibility 0s linear 220ms; }
+.site-header .site-nav-item:hover .site-nav-sub, .site-header .site-nav-item:focus-within .site-nav-sub, .site-header .site-nav-item[data-open] .site-nav-sub { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+.site-header .site-nav-sub ul { width: max-content; min-width: 260px; margin: 0; padding: 8px; list-style: none; border-radius: 12px; background: #fff; box-shadow: 0 0 0 1px #EDE8FF, 0 12px 32px rgba(17, 2, 59, 0.14); }
+.site-header .site-nav-sub-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: var(--brand-ink); font-size: 14px; font-weight: 500; line-height: 1.4; white-space: nowrap; transition: background 160ms ease, color 160ms ease; }
+.site-header .site-nav-sub-link:hover { background: #FAF7FF; color: var(--brand-navy); }
+.site-header .site-nav-sub-num { color: #6C47FF; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.site-header .site-nav-group { display: flex; flex-direction: column; }
+.site-header .site-nav-menu .site-nav-link.site-nav-link--sub { padding: 10px 16px 10px 32px; font-size: 14px; color: #52525B; }
+.site-header .site-nav-cta { display: inline-flex; align-items: center; gap: 20px; height: 40px; padding: 8px 20px; border-radius: 9999px; background: var(--brand-navy); color: #fff; font-size: 16px; line-height: 1.5; white-space: nowrap; transition: background 200ms ease; }
+.site-header .site-nav-cta:hover { background: var(--brand-violet); }
+.site-header .site-nav-cta-arrow { font-size: 14px; font-weight: 500; transition: transform 200ms var(--ease-out-soft); }
+.site-header .site-nav-cta:hover .site-nav-cta-arrow { transform: translateX(3px); }
+.site-header .site-nav-toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 9999px; color: var(--brand-navy); }
+.site-header .site-nav-toggle:hover { background: var(--brand-line); }
+.site-header .site-nav-menu { position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 8px; display: flex; flex-direction: column; background: #fff; border-radius: 12px; box-shadow: 0 12px 32px rgba(17, 2, 59, 0.16); }
+.site-header .site-nav-menu .site-nav-link { padding: 14px 16px; font-size: 16px; border-radius: 8px; }
+.site-header .site-nav-menu .site-nav-link:hover { background: var(--brand-line); }
+.site-header .site-nav-menu .site-nav-cta { justify-content: center; height: 52px; margin-top: 8px; }
+.site-header :focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+/* Full navbar above 1100px; it tightens progressively so all links + the
+   CTA fit. 1100px and below (every tablet held upright, iPad Pro 13 and
+   Surface Pro included), the ☰ menu: the site's one tablet/mobile switch
+   point (founders, 2026-11-08; was 1024px). */
+@media (max-width: 1240px) {
+  .site-header .site-nav { gap: 20px; }
+  .site-header .site-nav-links { gap: 22px; }
+}
+@media (max-width: 1100px) {
+  .site-header .site-nav-divider { display: none; }
+  .site-header .site-nav { gap: 16px; padding: 10px 16px; }
+  .site-header .site-nav-links { gap: clamp(12px, 1.6vw, 20px); }
+  .site-header .site-nav-link { font-size: 13px; }
+  .site-header .site-nav-cta { gap: 10px; padding: 8px 14px; font-size: 14px; }
+}
+@media (max-width: 1100px) {
+  .site-header .site-nav-links { display: none; }
+  .site-header .site-nav-toggle { display: inline-flex; }
+  .site-header .site-nav-actions { display: flex; align-items: center; gap: 8px; }
+  .site-header .site-nav-cta-arrow { display: inline; }
+}
+@media (min-width: 1101px) { .site-header .site-nav-actions { display: contents; } }
+@media (max-width: 520px) { .site-header .site-nav-actions > .site-nav-cta { display: none; } }
+@media (prefers-reduced-motion: reduce) { .site-header .site-nav-cta, .site-header .site-nav-cta-arrow, .site-header .site-nav-link, .site-header .site-nav-sub, .site-header .site-nav-sub-toggle { transition: none; } }
+
+/* ---- shared footer (src/app/Footer.jsx; 2026 Figma 457:243) ---- */
+/* Selectors are .site-footer-scoped so they outrank page resets such as
+   ".services-page a" / ".services-page h2". */
+.site-footer { padding: 40px 20px 20px; font-family: var(--font-brand); background: #fff; }
+/* laptops and up: brand | Quick Links | Contact as equal thirds with a thin
+   faint line between them, so the space reads as structure (founders,
+   2026-11-17: footer option "D · Dividers") */
+.site-footer .site-footer-card { max-width: calc(var(--site-max) - 40px); margin: 0 auto; padding: 60px 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 40px 0; border-radius: 24px; background: #0A0125; color: #fff; }
+.site-footer .site-footer-brand { max-width: 339px; display: flex; flex-direction: column; gap: 17px; }
+.site-footer .site-footer-brand p { margin: 0; font-size: 14px; line-height: 1.5; text-wrap: pretty; }
+.site-footer .site-footer-col { flex: none; display: flex; flex-direction: column; gap: 20px; }
+.site-footer .site-footer-title { margin: 0; color: #fff; font-size: 18px; font-weight: 600; line-height: normal; }
+.site-footer ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 21px; }
+.site-footer .site-footer-link { color: #A1A1AA; font-size: 14px; font-weight: 500; line-height: 1.5; transition: color 160ms ease; }
+.site-footer a.site-footer-link:hover { color: #fff; }
+.site-footer .site-footer-brand { padding-right: 32px; }
+.site-footer .site-footer-col { padding-left: clamp(32px, 4vw, 64px); border-left: 1px solid rgba(255, 255, 255, 0.12); }
+.site-footer .site-footer-contact ul { gap: 20px; }
+/* Quick Links in two columns of three, so the three-column footer is evenly
+   filled (founders, 2026-11-12) */
+.site-footer .site-footer-col:not(.site-footer-contact) ul { display: grid; grid-template-columns: repeat(2, auto); grid-auto-flow: column; grid-template-rows: repeat(3, auto); column-gap: 48px; }
+.site-footer .site-footer-contact li { display: flex; align-items: center; gap: 6px; }
+.site-footer .site-footer-contact li.is-top { align-items: flex-start; }
+.site-footer .site-footer-contact li.is-quiet { opacity: 0.6; } .site-footer .site-footer-contact li.is-quiet .site-footer-link { font-size: 13px; } /* the address, deprioritised (founders, 2026-11-18) */
+.site-footer .site-footer-contact li > img, .site-footer .site-footer-icon-pin { flex: none; }
+.site-footer .site-footer-icon-pin { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.site-footer .site-footer-contact .site-footer-link { flex: 1; min-width: 0; overflow-wrap: break-word; }
+.site-footer .site-footer-contact .site-footer-link.is-nowrap { white-space: nowrap; }
+.site-footer .site-footer-social { display: flex; gap: 15px; }
+.site-footer .site-footer-social a { display: inline-flex; border-radius: 6px; transition: opacity 160ms ease, transform 160ms ease; }
+.site-footer .site-footer-social a:hover { opacity: 0.8; transform: translateY(-2px); }
+.site-footer .site-footer-social > span { display: inline-flex; }
+.site-footer :focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+/* faded "aripra" wordmark: top 100px of the 219px-tall vector, copyright over it */
+.site-footer .site-footer-bottom { position: relative; width: min(788px, 100%); height: 100px; margin: 20px auto 0; overflow: hidden; }
+.site-footer .site-footer-wordmark img { display: block; width: 100%; height: auto; }
+.site-footer .site-footer-copy { position: absolute; left: 50%; top: 76px; translate: -50% 0; margin: 0; display: flex; align-items: center; gap: 5px; color: #A1A1AA; font-size: 14px; line-height: 1.5; white-space: nowrap; }
+@media (max-width: 1100px) {
+  .site-footer .site-footer-card { grid-template-columns: repeat(2, auto); justify-content: space-between; align-items: start; column-gap: 40px; }
+  .site-footer .site-footer-brand { padding-right: 0; }
+  .site-footer .site-footer-col { padding-left: 0; border-left: 0; }
+  .site-footer .site-footer-contact { width: 250px; } /* email + phone on one line; only the address wraps */
+  .site-footer .site-footer-brand { grid-column: 1 / -1; max-width: 420px; }
+}
+@media (max-width: 720px) {
+  .site-footer { padding: 32px 16px 16px; }
+  .site-footer .site-footer-card { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px 20px; border-radius: 20px; }
+  .site-footer .site-footer-contact { width: auto; grid-column: 1 / -1; }
+  .site-footer .site-footer-bottom { height: auto; aspect-ratio: 788 / 100; }
+  .site-footer .site-footer-copy { top: auto; bottom: 0; font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .site-footer .site-footer-link, .site-footer .site-footer-social a { transition: none; } }
+
+/* ---- Section rhythm: ONE gap between page sections, site-wide — 80px
+   desktop / 56px mobile (client, 2026-10-19: 40/30 made the section ends unclear). Change --sec-gap to retune every page. The visible gap is
+   measured content-to-content: plain (white) sections get half the gap as
+   padding on each side; sections with their own background (heroes, dark
+   bands, cards) keep their inner padding and get the half-gap as outer
+   margin instead. Any two neighbours therefore add up to exactly one gap.
+   The footer's own top padding is the last half-gap. ---- */
+:root { --sec-gap: 80px; }
+@media (max-width: 720px) { :root { --sec-gap: 56px; } }
+.site-page main > :is(section, div):not(.hm-hero, .pg-hero, .hm-nfy, .ab-setup, .hw-compare, .cd-built, .hm-final) { margin-block: 0; padding-block: calc(var(--sec-gap) / 2); }
+.site-page main > :is(.hm-hero, .pg-hero) { margin-bottom: calc(var(--sec-gap) / 2); }
+.site-page main > :is(.hm-nfy, .ab-setup, .hw-compare, .cd-built, .hm-final) { margin-block: calc(var(--sec-gap) / 2); }
+.site-page .site-footer { padding-top: calc(var(--sec-gap) / 2); }
+.sv-services .sv-service { margin-top: var(--sec-gap); }
+.sv-services .sv-service:first-child { margin-top: 0; }
+
+/* ---- scroll cue (hero) + back-to-top (ScrollCue.jsx, BackToTop.jsx) ---- */
+.scue { position: absolute; z-index: 2; left: 50%; bottom: 18px; transform: translateX(-50%); display: inline-flex; padding: 6px; border: 0; border-radius: 9999px; background: none; color: var(--brand-navy); cursor: pointer; transition: opacity 300ms ease, visibility 0s; }
+.scue.is-gone { opacity: 0; visibility: hidden; transition: opacity 300ms ease, visibility 0s 300ms; }
+.scue:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+/* three chevrons lighting up top to bottom (client pick) */
+.scue-e { display: flex; flex-direction: column; align-items: center; gap: 0; margin-top: -4px; }
+.scue-e svg { margin-top: -3px; opacity: 0.2; animation: scue-chev 1.5s ease-in-out infinite; animation-delay: calc(var(--i) * 0.18s); }
+@keyframes scue-chev { 0%, 100% { opacity: 0.18; } 40% { opacity: 1; color: var(--brand-orange); } }
+
+.totop { position: fixed; z-index: 60; right: 24px; bottom: 24px; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border: 0; border-radius: 50%; background: var(--brand-navy); color: #fff; box-shadow: 0 10px 24px rgba(17, 2, 59, 0.28); cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(12px); transition: opacity 220ms ease, transform 220ms var(--ease-out-soft), visibility 0s 220ms, background 160ms ease; }
+.totop.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity 220ms ease, transform 220ms var(--ease-out-soft), background 160ms ease; }
+.totop:hover { background: #5835E8; }
+.totop:hover .totop-arrow { transform: translateY(-2px); }
+.totop:focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+.totop > svg { grid-area: 1 / 1; }
+.totop-arrow { transition: transform 200ms var(--ease-out-soft); }
+.totop-ring { display: block; transform: rotate(-90deg); }
+.totop-ring circle { fill: none; stroke-width: 3; }
+.totop-ring-track { stroke: rgba(255, 255, 255, 0.18); }
+.totop-ring-fill { stroke: var(--brand-orange); stroke-linecap: round; }
+@media (max-width: 720px) { .totop { right: 16px; bottom: 16px; width: 48px; height: 48px; } .scue { bottom: 10px; } }
+@media (prefers-reduced-motion: reduce) {
+  .scue-e svg { animation: none; opacity: 0.6; }
+  .totop, .totop.is-shown, .totop-arrow { transition: none; }
+}
