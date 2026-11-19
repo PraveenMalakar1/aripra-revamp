@@ -73,6 +73,7 @@ html, body { background: #EEEEF2; }
 .site-header .site-nav-cta:hover .site-nav-cta-arrow { transform: translateX(3px); }
 .site-header .site-nav-toggle { display: none; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 9999px; color: var(--brand-navy); }
 .site-header .site-nav-toggle:hover { background: var(--brand-line); }
+.site-header .site-nav-backdrop { position: fixed; inset: 0; z-index: -2; background: rgba(10, 1, 37, 0.45); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); } /* under the open mobile menu */
 .site-header .site-nav-menu { position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 8px; display: flex; flex-direction: column; background: #fff; border-radius: 12px; box-shadow: 0 12px 32px rgba(17, 2, 59, 0.16); }
 .site-header .site-nav-menu .site-nav-link { padding: 14px 16px; font-size: 16px; border-radius: 8px; }
 .site-header .site-nav-menu .site-nav-link:hover { background: var(--brand-line); }
@@ -126,35 +127,35 @@ html, body { background: #EEEEF2; }
 .site-footer .site-footer-col:not(.site-footer-contact) ul { display: grid; grid-template-columns: repeat(2, auto); grid-auto-flow: column; grid-template-rows: repeat(3, auto); column-gap: 48px; }
 .site-footer .site-footer-contact li { display: flex; align-items: center; gap: 6px; }
 .site-footer .site-footer-contact li.is-top { align-items: flex-start; }
-.site-footer .site-footer-contact li.is-quiet { opacity: 0.6; } .site-footer .site-footer-contact li.is-quiet .site-footer-link { font-size: 13px; } /* the address, deprioritised (founders, 2026-11-18) */
 .site-footer .site-footer-contact li > img, .site-footer .site-footer-icon-pin { flex: none; }
 .site-footer .site-footer-icon-pin { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
 .site-footer .site-footer-contact .site-footer-link { flex: 1; min-width: 0; overflow-wrap: break-word; }
 .site-footer .site-footer-contact .site-footer-link.is-nowrap { white-space: nowrap; }
-.site-footer .site-footer-social { display: flex; gap: 15px; }
-.site-footer .site-footer-social a { display: inline-flex; border-radius: 6px; transition: opacity 160ms ease, transform 160ms ease; }
-.site-footer .site-footer-social a:hover { opacity: 0.8; transform: translateY(-2px); }
-.site-footer .site-footer-social > span { display: inline-flex; }
 .site-footer :focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .site-footer .site-footer-link { transition: none; } }
 /* faded "aripra" wordmark: top 100px of the 219px-tall vector, copyright over it */
 .site-footer .site-footer-bottom { position: relative; width: min(788px, 100%); height: 100px; margin: 20px auto 0; overflow: hidden; }
 .site-footer .site-footer-wordmark img { display: block; width: 100%; height: auto; }
 .site-footer .site-footer-copy { position: absolute; left: 50%; top: 76px; translate: -50% 0; margin: 0; display: flex; align-items: center; gap: 5px; color: #A1A1AA; font-size: 14px; line-height: 1.5; white-space: nowrap; }
+.site-footer .site-footer-addr { display: inline-flex; align-items: center; gap: 8px; margin-left: 3px; }
 @media (max-width: 1100px) {
   .site-footer .site-footer-card { grid-template-columns: repeat(2, auto); justify-content: space-between; align-items: start; column-gap: 40px; }
   .site-footer .site-footer-brand { padding-right: 0; }
   .site-footer .site-footer-col { padding-left: 0; border-left: 0; }
-  .site-footer .site-footer-contact { width: 250px; } /* email + phone on one line; only the address wraps */
   .site-footer .site-footer-brand { grid-column: 1 / -1; max-width: 420px; }
 }
 @media (max-width: 720px) {
   .site-footer { padding: 32px 16px 16px; }
   .site-footer .site-footer-card { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px 20px; border-radius: 20px; }
   .site-footer .site-footer-contact { width: auto; grid-column: 1 / -1; }
-  .site-footer .site-footer-bottom { height: auto; aspect-ratio: 788 / 100; }
-  .site-footer .site-footer-copy { top: auto; bottom: 0; font-size: 12px; }
+  /* phones: the wordmark band, then the copyright and the address on their
+     own lines under it */
+  .site-footer .site-footer-bottom { height: auto; overflow: visible; }
+  .site-footer .site-footer-wordmark { aspect-ratio: 788 / 100; overflow: hidden; }
+  .site-footer .site-footer-copy { position: static; translate: none; flex-wrap: wrap; justify-content: center; margin-top: 6px; font-size: 12px; white-space: normal; text-align: center; }
+  .site-footer .site-footer-addr { flex-basis: 100%; justify-content: center; margin-left: 0; }
+  .site-footer .site-footer-sep { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .site-footer .site-footer-link, .site-footer .site-footer-social a { transition: none; } }
 
 /* ---- Section rhythm: ONE gap between page sections, site-wide — 80px
    desktop / 56px mobile (client, 2026-10-19: 40/30 made the section ends unclear). Change --sec-gap to retune every page. The visible gap is
