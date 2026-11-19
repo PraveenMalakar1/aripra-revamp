@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { TESTIMONIALS } from './voicesData';
-import VoicesMarquee from './VoicesMarquee';
+import MomentsCarousel from './MomentsCarousel';
 
 // "From other founders we’ve worked with" (copy v4; was "What clients say") (founders, 2026-10-19, after the old site's testimonials
 // block): rating pill then heading, centred; the testimonials in a moving row
@@ -37,13 +37,12 @@ function Voice({ t, className = '', hidden }) {
 // the long Lumasoft review gets a wider card in the moving row
 const isLong = (t) => t.quote.length > 400;
 
-// the moving row of testimonials (VoicesMarquee.jsx): the list, plus an
-// aria-hidden copy for a seamless loop
-const voiceList = (hidden) => (
-  <ul className="hm-vrow-list" aria-hidden={hidden || undefined}>
-    {TESTIMONIALS.map((t) => <Voice key={t.name} t={t} hidden={hidden} className={isLong(t) ? 'is-long' : ''} />)}
-  </ul>
-);
+// the moving row of testimonials: the same carousel as "Sound familiar?"
+// (MomentsCarousel.jsx; founders, 2026-11-19), so swiping, momentum and the
+// drift behave identically. The cards, plus an aria-hidden copy for the loop.
+const voices = (hidden) => TESTIMONIALS.map((t) => (
+  <Voice key={t.name} t={t} hidden={hidden} className={isLong(t) ? 'is-long' : ''} />
+));
 
 // one copy of the logo row; rendered twice, the track slides by one copy
 const LogoRow = ({ hidden }) => (
@@ -64,7 +63,9 @@ export default function Testimonials() {
           {/* the Upwork rating pill was removed (founders, 2026-11-02) */}
           <h2 id="hm-voices-title" className="hm-h2">From other founders we’ve worked with</h2>
         </div>
-        <VoicesMarquee row={voiceList(false)} clone={voiceList(true)} />
+        <MomentsCarousel className="hm-vrow" item=".hm-voice" label="testimonial" copy={voices(true)}>
+          {voices(false)}
+        </MomentsCarousel>
         {/* client logos: endless slow marquee (pure CSS), pauses on hover,
             static row with reduced motion */}
         <div className="hm-logos hm-reveal" role="group" aria-label="Clients we work with">

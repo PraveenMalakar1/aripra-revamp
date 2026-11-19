@@ -268,17 +268,15 @@
 
 /* ---- testimonials: moving row (VoicesMarquee.jsx, founders' pick "A",
    2026-11-02): full width, soft faded edges, arrows below ---- */
-.hm-vrow { display: flex; flex-direction: column; gap: 20px; }
-.hm-vrow-viewport { margin-inline: calc(50% - 50vw); overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
-.hm-vrow-viewport { touch-action: pan-y; cursor: grab; user-select: none; } /* swipe / drag the row; vertical scrolling stays with the page */
-.hm-vrow-viewport:active { cursor: grabbing; }
-.hm-vrow-track { position: relative; /* cards' offsetLeft is measured from here */ display: flex; width: max-content; padding-block: 6px; will-change: transform; }
-.hm-vrow-list { display: flex; align-items: stretch; gap: 24px; margin: 0; padding: 0 24px 0 0; list-style: none; }
+/* testimonials row: the shared "Sound familiar?" carousel (MomentsCarousel.jsx), full-bleed with faded edges */
+.hm-vrow.hm-marquee-wrap { margin-top: 0; }
+.hm-vrow .hm-marquee { margin-inline: calc(50% - 50vw); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.hm-vrow .hm-marquee-track { padding-block: 6px; }
+.hm-vrow .hm-marquee-list { align-items: stretch; gap: 24px; padding-right: 24px; }
 .hm-vrow .hm-voice { flex: none; width: 420px; }
 .hm-vrow .hm-voice.is-long { width: 700px; } /* the long review: wider, so it isn't much taller */
 .hm-vrow .hm-voice-figure { padding: 28px 30px; }
 .hm-vrow .hm-voice-quote { font-size: 15px; line-height: 1.65; }
-.hm-vrow-nav { display: flex; justify-content: center; gap: 12px; }
 @media (max-width: 720px) {
   .hm-vrow .hm-voice { width: 300px; }
   .hm-vrow .hm-voice.is-long { width: 340px; }
@@ -396,6 +394,17 @@
 @media (max-width: 560px) {
   .csx-foot { gap: 16px; }
   .csx-foot .csx-dots { display: none; } /* phones: arrows + button only, so the line fits */
+}
+/* phones: the case studies as the shared scrolling row (MomentsCarousel.jsx;
+   founders, 2026-11-19) instead of the spotlight */
+.csx-row { display: none; }
+@media (max-width: 720px) {
+  .csx-stage, .csx-nav { display: none; }
+  .csx-row { display: block; width: 100%; margin-top: 0; }
+  .csx-row .hm-marquee { margin-inline: calc(50% - 50vw); }
+  .csx-row .hm-marquee-list { align-items: stretch; gap: 14px; padding-right: 14px; padding-block: 6px 16px; }
+  .csx-row-card { flex: none; width: 290px; display: flex; }
+  .csx-row-card .csx-card-link { flex: 1; min-height: 0; box-shadow: inset 0 0 0 1px #EDE8FF, 0 6px 20px rgba(17, 2, 59, 0.06); }
 }
 .csx-dot { position: relative; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 9999px; background: #DCD3FB; cursor: pointer; transition: width 300ms var(--ease-out-soft), background 300ms ease; }
 .csx-dot::after { content: ''; position: absolute; inset: -8px; }

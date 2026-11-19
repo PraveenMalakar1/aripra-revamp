@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useInView } from 'motion/react';
 import { CASE_STUDIES } from '../case-studies/data';
 import KeyStat from '../case-studies/KeyStat';
+import MomentsCarousel from './MomentsCarousel';
 
 // Homepage case-study spotlight (founders' pick "B", 2026-10-19): every study
 // from the Our Work page; the centre card is large, its neighbours fan out
@@ -15,12 +16,42 @@ import KeyStat from '../case-studies/KeyStat';
 // controls and "See all our work →".
 // Auto-advances every STEP_MS; paused while hovered, keyboard-focused or off
 // screen, and never with reduced motion. Swipe left / right on the cards to
-// move one either way (founders, 2026-11-19). Styles: .csx-* in home.css.
+// move one either way (founders, 2026-11-19). Phones get the same cards in
+// the shared "Sound familiar?" row instead (MomentsCarousel.jsx): endless
+// swiping with momentum and the slow drift (founders, 2026-11-19).
+// Styles: .csx-* in home.css.
 
 const STUDIES = CASE_STUDIES.filter((s) => s.href);
 const STEP_MS = 3000;
 const SWIPE_PX = 40; // horizontal distance that counts as a swipe
 const name = (s) => (s.client ? `${s.client} · ${s.project}` : s.project);
+
+// a card's content, shared by the spotlight and the phone row
+function CardBody({ s }) {
+  return (
+    <>
+      <span className="csx-logo">
+        <Image src={s.image} alt={`${s.project} logo`} fill sizes="420px" />
+      </span>
+      <span className="csx-card-body">
+        <span className="csx-card-name">{name(s)}</span>
+        <span className="csx-card-title">{s.title}</span>
+        <span className="csx-card-stat">
+          <span className="csx-card-stat-label">Key stat</span>
+          <KeyStat highlights={s.highlights} />
+        </span>
+        <span className="csx-card-cta" aria-hidden="true">Read the case study →</span>
+      </span>
+    </>
+  );
+}
+
+// phones: the row (the copy is aria-hidden and out of the tab order)
+const rowCards = (hidden) => STUDIES.map((s) => (
+  <li key={s.slug} className="csx-row-card" aria-hidden={hidden || undefined}>
+    <Link href={s.href} className="csx-card-link" tabIndex={hidden ? -1 : undefined}><CardBody s={s} /></Link>
+  </li>
+));
 
 const Arrow = ({ flip }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={flip ? { transform: 'scaleX(-1)' } : undefined}>
@@ -59,30 +90,46 @@ export default function CaseShowcase() {
     return () => clearTimeout(t);
   }, [active, hold, inView, n]);
 
-  // swipe: a horizontal move over SWIPE_PX moves one card; vertical moves
-  // stay with the page (touch-action: pan-y in CSS). A swipe doesn't also
-  // open the card under the finger.
+  // swipe: a horizontal finger move over SWIPE_PX moves one card; vertical
+  // moves stay with the page (touch-action: pan-y in CSS). Read from the
+  // phone's own touch events (most reliable across mobile browsers). A swipe
+  // doesn't also open the card under the finger.
   const swipe = useRef(null);
-  const onPointerDown = (e) => {
-    if (e.pointerType === 'mouse') return; // desktop has the arrows
-    swipe.current = { id: e.pointerId, x0: e.clientX, y0: e.clientY, done: false };
-    setHold(true);
-  };
-  const onPointerMove = (e) => {
-    const sw = swipe.current;
-    if (!sw || sw.id !== e.pointerId || sw.done) return;
-    const dx = e.clientX - sw.x0;
-    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(e.clientY - sw.y0)) {
-      sw.done = true;
-      setActive((a) => (a + (dx < 0 ? 1 : -1) + n) % n);
-    }
-  };
-  const onPointerEnd = (e) => {
-    const sw = swipe.current;
-    if (!sw || sw.id !== e.pointerId) return;
-    setTimeout(() => { swipe.current = null; }, 0); // after the click that may follow
-    setHold(false);
-  };
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return undefined;
+    const start = (e) => {
+      const t = e.touches[0];
+      swipe.current = { x0: t.clientX, y0: t.clientY, done: false };
+      setHold(true);
+    };
+    const move = (e) => {
+      const sw = swipe.current;
+      if (!sw || sw.done) return;
+      const t = e.touches[0];
+      const dx = t.clientX - sw.x0;
+      if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(t.clientY - sw.y0)) {
+        sw.done = true;
+        setActive((a) => (a + (dx < 0 ? 1 : -1) + n) % n);
+      }
+    };
+    const end = () => {
+      const sw = swipe.current;
+      // clear it after the click that may follow, unless a new touch began
+      setTimeout(() => { if (swipe.current === sw) swipe.current = null; }, 400);
+      setHold(false);
+    };
+    el.addEventListener('touchstart', start, { passive: true });
+    el.addEventListener('touchmove', move, { passive: true });
+    el.addEventListener('touchend', end);
+    el.addEventListener('touchcancel', end);
+    return () => {
+      el.removeEventListener('touchstart', start);
+      el.removeEventListener('touchmove', move);
+      el.removeEventListener('touchend', end);
+      el.removeEventListener('touchcancel', end);
+    };
+  }, [n]);
   const onClickCapture = (e) => { if (swipe.current?.done) { e.preventDefault(); e.stopPropagation(); } };
 
   return (
@@ -97,10 +144,6 @@ export default function CaseShowcase() {
       <ul
         ref={stage}
         className="csx-stage"
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerEnd}
-        onPointerCancel={onPointerEnd}
         onClickCapture={onClickCapture}
       >
         {STUDIES.map((s, i) => {
@@ -118,23 +161,16 @@ export default function CaseShowcase() {
               onClick={isActive ? undefined : () => setActive(i)}
             >
               <Link href={s.href} className="csx-card-link" tabIndex={isActive ? undefined : -1}>
-                <span className="csx-logo">
-                  <Image src={s.image} alt={`${s.project} logo`} fill sizes="420px" />
-                </span>
-                <span className="csx-card-body">
-                  <span className="csx-card-name">{name(s)}</span>
-                  <span className="csx-card-title">{s.title}</span>
-                  <span className="csx-card-stat">
-                    <span className="csx-card-stat-label">Key stat</span>
-                    <KeyStat highlights={s.highlights} />
-                  </span>
-                  <span className="csx-card-cta" aria-hidden="true">Read the case study →</span>
-                </span>
+                <CardBody s={s} />
               </Link>
             </li>
           );
         })}
       </ul>
+      {/* phones only (CSS swaps it with the spotlight above) */}
+      <MomentsCarousel className="csx-row" item=".csx-row-card" label="case study" copy={rowCards(true)}>
+        {rowCards(false)}
+      </MomentsCarousel>
       <div className="csx-foot">
         <div className="csx-nav">
           <button type="button" className="hm-marquee-btn" aria-label="Previous case study" onClick={() => setActive((a) => (a - 1 + n) % n)}><Arrow flip /></button>
