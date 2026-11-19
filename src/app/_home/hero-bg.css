@@ -1,0 +1,8 @@
+/* Homepage hero background (HeroBg.jsx; founders' pick "Circuit",
+   2026-11-19): the dark sections' circuit lines, light lavender and faint,
+   with pulses in a light shade of the button navy. Behind the glows and the
+   content. */
+.hbg { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.4; }
+.hbg .cbg-svg path:not(.cbg-pulse) { stroke: rgba(108, 71, 255, 0.08); }
+.hbg .cbg-pulse { stroke: #9A93BD; filter: drop-shadow(0 0 3px rgba(17, 2, 59, 0.15)); }
+@media (max-width: 720px) { .hbg { opacity: 0.28; } } /* fainter still on phones */
