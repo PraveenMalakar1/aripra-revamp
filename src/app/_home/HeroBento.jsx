@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { BOOKING_HREF } from '../_shared/company';
 import ScrollCue from '../_shared/ScrollCue';
 import HeroVideo from './HeroVideo';
+import HeroBg from './HeroBg';
 
 // Homepage hero, "Odometer" (founders' final pick, 2026-11-05; copy v4).
 // Split layout: text on the left (60%): the two-line headline with "£200M"
@@ -9,7 +10,8 @@ import HeroVideo from './HeroVideo';
 // into the video and the CTAs; Faheem's video on the right (40%), with a light
 // running round it. Tablet/phone: stacked and centred, the video between the
 // text and the CTAs. No label above the headline (founders, 2026-11-05).
-// Continuous motion: two soft glows breathing at the sides, the subheading's
+// Continuous motion: faint circuit lines with travelling pulses behind
+// everything (HeroBg.jsx), two soft glows breathing at the sides, the subheading's
 // sheen, the light round the video and a ring pulsing round the play button.
 // All still for reduced motion. Styles: hero-bento.css.
 const rise = (ms) => ({ '--rise-delay': `${ms}ms` });
@@ -35,6 +37,7 @@ function Odometer({ digits }) {
 export default function HeroBento() {
   return (
     <section className="hm-hero hfb" aria-labelledby="hfb-title">
+      <HeroBg />
       <div className="hfb-glow is-left" aria-hidden="true" />
       <div className="hfb-glow is-right" aria-hidden="true" />
 
