@@ -21,7 +21,7 @@ const MOMENTS = [
   },
   {
     id: 'creating',
-    title: 'Every new feature takes forever and breaks something else.',
+    title: 'Every new feature you ship takes forever and breaks something else.', // founders, 2026-11-18
     text: 'What should take a week takes a month. Every fix introduces a new problem. Progress has stalled.',
     image: '/home/moment-create.png',
   },
@@ -59,6 +59,8 @@ export default function Moments() {
         <h2 id="hm-moments-title" className="hm-moments-title">The problems we hear most often</h2>{/* founders, 2026-11-16 (was "The moments…") */}
         <span className="hm-moments-rule" aria-hidden="true" />
       </div>
+      {/* the question and the cards read as one beat (founders, 2026-11-18) */}
+      <p className="hm-moments-sub">Sound familiar?</p>
 
       {/* the closing line sits between the row and the arrows (founders, 2026-11-04) */}
       <MomentsCarousel
