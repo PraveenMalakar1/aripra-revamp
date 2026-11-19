@@ -5,6 +5,11 @@ import Link from 'next/link';
 import { useInView } from 'motion/react';
 import PlayOnView from '../_shared/PlayOnView';
 import { SERVICES } from './servicesData';
+import { SERVICE_NAV } from '../services/nav/serviceList';
+
+// phones show short tab labels so all four fit in one row (founders,
+// 2026-11-19); same short names as the Services page strip
+const SHORT = Object.fromEntries(SERVICE_NAV.map((s) => [s.id, s.short]));
 
 // "What we do" tabs (founders' pick, 2026-10-19): four tabs across the top,
 // the picked service below. Auto-advances every TAB_MS, like the How We Work
@@ -96,9 +101,12 @@ export default function ServicesTabs() {
             aria-controls={`${uid}-panel-${i}`}
             tabIndex={active === i ? 0 : -1}
             className="svc-a-tab"
+            aria-label={s.title}
             onClick={() => { setActive(i); setClicks((c) => c + 1); }}
           >
-            <span className="svc-num">{num(i)}</span>{s.title}
+            <span className="svc-num">{num(i)}</span>
+            <span className="svc-a-label">{s.title}</span>
+            <span className="svc-a-label is-short" aria-hidden="true">{SHORT[s.id]}</span>
             {/* keyed so the countdown restarts on every change */}
             {active === i && <span key={`${active}-${clicks}`} className="svc-a-progress" aria-hidden="true" onAnimationEnd={next} />}
           </button>

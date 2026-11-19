@@ -9,7 +9,16 @@ import { useEffect, useRef } from 'react';
 // off-screen or in a hidden tab, and for a few seconds after the visitor
 // uses the arrows or swipes. With "reduce motion" it never drifts; the arrows
 // and swiping still work.
+// Shared (founders, 2026-11-19): the same row also runs the testimonials and,
+// on phones, the case studies, so all three behave identically. `className`
+// scopes each one's styles; `item` is the card selector the arrows step by.
+// Touch (founders, 2026-11-19): the auto-scroll loops endlessly, but a
+// visitor swiping by hand stops at the last card (and the first): no manual
+// looping. While a finger is on the row it stays still; once the finger lifts
+// and the swipe settles, the auto-scroll starts again straight away.
 const DRIFT_SECONDS_PER_LOOP = 60;
+const SETTLE_MS = 180; // no scroll movement for this long = the swipe has settled
+const END_GUTTER = 16; // the last card stops this far from the screen edge
 const RESUME_AFTER_MS = 4000;
 const STEP_MS = 450;
 
@@ -20,7 +29,7 @@ const ArrowIcon = ({ flip }) => (
 );
 
 // `note`: shown between the row and the arrows (founders, 2026-11-04).
-export default function MomentsCarousel({ children, copy, note }) {
+export default function MomentsCarousel({ children, copy, note, className = '', item = '.hm-moment', label = 'moment' }) {
   const scroller = useRef(null);
   const track = useRef(null);
   const api = useRef(null);
@@ -36,6 +45,10 @@ export default function MomentsCarousel({ children, copy, note }) {
     let onScreen = true;
     let holdUntil = 0;
     let tween = null; // { from, to, start }
+    let touching = false; // a finger is on the row
+    let manual = false; // a hand swipe is in progress (finger down or still gliding)
+    let upper = 0; // furthest a hand swipe may go: the last card
+    let settle = 0;
     let last = performance.now();
     let raf = 0;
 
@@ -52,7 +65,7 @@ export default function MomentsCarousel({ children, copy, note }) {
         const t = Math.min((now - tween.start) / (reduced ? 1 : STEP_MS), 1);
         write(wrap(tween.from + (tween.to - tween.from) * ease(t)));
         if (t === 1) tween = null;
-      } else if (!reduced && !hovered && !focused && onScreen && !document.hidden && now > holdUntil) {
+      } else if (!reduced && !touching && !manual && !hovered && !focused && onScreen && !document.hidden && now > holdUntil) {
         write(wrap(pos + (half() / (DRIFT_SECONDS_PER_LOOP * 1000)) * dt));
       }
       raf = requestAnimationFrame(frame);
@@ -61,7 +74,7 @@ export default function MomentsCarousel({ children, copy, note }) {
 
     // one card per click: card width + gap
     const step = () => {
-      const card = tr.querySelector('.hm-moment');
+      const card = tr.querySelector(item);
       const gap = parseFloat(getComputedStyle(card.parentElement).columnGap) || 0;
       return card.offsetWidth + gap;
     };
@@ -74,8 +87,38 @@ export default function MomentsCarousel({ children, copy, note }) {
       },
     };
 
+    // touch: hold still while the finger is down; a hand swipe ends at the
+    // last card of the list the row is showing (never into the loop copy)
+    const lastEnd = () => {
+      const last = tr.firstElementChild?.lastElementChild;
+      return last ? last.offsetLeft + last.offsetWidth - el.clientWidth + END_GUTTER : 0;
+    };
+    const settled = () => {
+      clearTimeout(settle);
+      settle = setTimeout(() => { if (!touching) manual = false; }, SETTLE_MS);
+    };
+    const onTouchStart = () => {
+      touching = true;
+      manual = true;
+      tween = null;
+      clearTimeout(settle);
+      upper = Math.max(lastEnd(), pos); // already past it (mid-loop): no further
+    };
+    const onTouchEnd = () => {
+      touching = false;
+      settled();
+    };
+
     // visitor swipes / drags the row: follow it and pause the drift
     const onScroll = () => {
+      if (manual) {
+        // a hand swipe: no wrapping, and no further than the last card
+        if (el.scrollLeft > upper) el.scrollLeft = upper;
+        pos = el.scrollLeft;
+        tween = null;
+        if (!touching) settled();
+        return;
+      }
       // our own writes land within a pixel of pos (the browser may round)
       if (Math.abs(el.scrollLeft - pos) < 2) return;
       tween = null;
@@ -95,7 +138,14 @@ export default function MomentsCarousel({ children, copy, note }) {
     root.addEventListener('focusin', fin);
     root.addEventListener('focusout', fout);
     el.addEventListener('scroll', onScroll, { passive: true });
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchend', onTouchEnd, { passive: true });
+    el.addEventListener('touchcancel', onTouchEnd, { passive: true });
     return () => {
+      clearTimeout(settle);
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchcancel', onTouchEnd);
       cancelAnimationFrame(raf);
       io.disconnect();
       root.removeEventListener('pointerenter', enter);
@@ -104,10 +154,10 @@ export default function MomentsCarousel({ children, copy, note }) {
       root.removeEventListener('focusout', fout);
       el.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [item]);
 
   return (
-    <div className="hm-marquee-wrap">
+    <div className={className ? `hm-marquee-wrap ${className}` : 'hm-marquee-wrap'}>
       <div className="hm-marquee" ref={scroller}>
         <div className="hm-marquee-track" ref={track}>
           <ul className="hm-marquee-list">{children}</ul>
@@ -116,10 +166,10 @@ export default function MomentsCarousel({ children, copy, note }) {
       </div>
       {note}
       <div className="hm-marquee-nav">
-        <button type="button" className="hm-marquee-btn" aria-label="Previous moment" onClick={() => api.current?.move(-1)}>
+        <button type="button" className="hm-marquee-btn" aria-label={`Previous ${label}`} onClick={() => api.current?.move(-1)}>
           <ArrowIcon flip />
         </button>
-        <button type="button" className="hm-marquee-btn" aria-label="Next moment" onClick={() => api.current?.move(1)}>
+        <button type="button" className="hm-marquee-btn" aria-label={`Next ${label}`} onClick={() => api.current?.move(1)}>
           <ArrowIcon />
         </button>
       </div>
