@@ -18,6 +18,7 @@ import FinalCta from '../_shared/FinalCta';
 import '../_shared/shared.css';
 import './home.css';
 import './hero-bento.css';
+import './hero-bg.css';
 import './stats-brand.css';
 
 export default function HomePage() {
