@@ -1,10 +1,20 @@
 'use client';
 
 import { useRef } from 'react';
-import { JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import { useInView } from 'motion/react';
 
-const mono = JetBrains_Mono({ subsets: ['latin'], weight: ['400', '700'], display: 'swap' });
+// JetBrains Mono self-hosted (latin 400/700, OFL: fonts/JetBrainsMono-OFL.txt).
+// next/font/google broke the production build on the server: Google served
+// this font via /l/font?kit=…&… URLs that Turbopack's font loader rejects.
+const mono = localFont({
+  src: [
+    { path: './fonts/JetBrainsMono-400.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/JetBrainsMono-700.woff2', weight: '700', style: 'normal' },
+  ],
+  display: 'swap',
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+});
 
 // Re-creation of the Figma terminal image (420:832) as real text, so it stays
 // sharp at any density and can "type" in. Each line is revealed with a
