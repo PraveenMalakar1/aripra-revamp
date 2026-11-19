@@ -18,3 +18,4 @@ Shared/cross-project memory (user profile, Jira→Figma workflow, Figma workflow
 - [Button system](project_button_system.md) — only navy + white-outline buttons, 40px; dark-bg variants
 - [Dark panel gradient](project_dark_panel_gradient.md) — every dark panel uses --grad-dark (violet→navy); no new gradients
 - [Growth bars animation (saved)](project_growth_bars_animation.md) — £19M→£200M animated bar graph code, removed from hero; reuse on case study detail pages
+- [Write like the user](feedback_write_like_the_user.md) — comments/replies drafted for the user to post must read hand-written: short, plain, no AI tells
