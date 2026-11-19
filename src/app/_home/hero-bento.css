@@ -59,14 +59,13 @@
 @keyframes hfb-breathe { from { opacity: 0.55; transform: translate(0, 0) scale(0.9); } to { opacity: 1; transform: translate(3vw, 4vh) scale(1.1); } }
 @keyframes hfb-odo { from { transform: translateY(0); } to { transform: translateY(calc(var(--stop) * -1.06em)); } }
 
-/* desktop: subheading on one line; the video as tall as the text column
-   (founders, 2026-11-04). The frame then fills the column and the video
-   crops to it (object-fit: cover; the speaker stays centred). */
+/* desktop: subheading on one line */
 @media (min-width: 1101px) {
-  .hfb-split { align-items: stretch; }
   .hfb-sub { max-width: none; font-size: clamp(18px, 1.6vw, 26px); white-space: nowrap; }
-  .hfb-media, .hfb-media .hf-video { display: flex; }
-  .hfb-media .hf-video-frame { aspect-ratio: auto; height: 100%; min-height: 300px; }
+  /* the video keeps its own shape (768×560), so nothing is cropped
+     (founders, 2026-11-19: Faheem's head was cut when it filled the text
+     column's height); centred beside the text */
+  .hfb-media .hf-video-frame { aspect-ratio: 768 / 560; }
 }
 @media (max-width: 1100px) {
   .hfb-split { grid-template-columns: 1fr; justify-items: center; gap: 18px; text-align: center; }
@@ -76,10 +75,15 @@
 }
 @media (min-width: 721px) and (max-width: 1100px) { .hfb { padding-bottom: 76px; } }
 @media (max-width: 720px) {
-  .hfb-title { font-size: 36px; }
+  .hfb-title { font-size: clamp(34px, 11.6vw, 40px); } /* slightly larger on phones (founders, 2026-11-19; was 36px); a touch smaller on the narrowest so the first line never wraps */
   .hfb-sub { font-size: 18px; }
   .hfb-into { font-size: 15px; }
+  /* phones (founders, 2026-11-19): the video as wide as the buttons (max
+     360px), and the content centred between the nav bar and the scroll
+     arrows (40px above and below instead of 28 / 51) */
+  .hfb { padding-top: calc(var(--site-header-h, 82px) - 11px + 40px); padding-bottom: calc(29px + var(--scue-room, 0px)); }
   .hfb-ctas { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
+  .hfb-media { width: min(100%, 360px); }
   .hfb-media .vp-play { width: 56px; height: 56px; }
   .hfb-glow { width: 70vw; }
 }
@@ -88,3 +92,4 @@
   .hfb-sheen, .hfb-media .vp-play, .hfb-glow, .hfb-media.is-glow::before, .hfb-media.is-glow::after { animation: none; }
   .hfb-odo-reel { animation-duration: 1ms; animation-delay: 0ms; }
 }
+
