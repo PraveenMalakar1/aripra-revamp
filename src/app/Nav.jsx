@@ -168,7 +168,11 @@ export default function Nav() {
     document.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onPointer);
     window.addEventListener('resize', onResize, { passive: true });
+    // the page behind can't scroll while the menu is open
+    const { overflow } = document.body.style;
+    document.body.style.overflow = 'hidden';
     return () => {
+      document.body.style.overflow = overflow;
       document.removeEventListener('keydown', onKey);
       document.removeEventListener('pointerdown', onPointer);
       window.removeEventListener('resize', onResize);
@@ -177,6 +181,21 @@ export default function Nav() {
 
   return (
     <header className="site-header" ref={headerRef}>
+      {/* behind the open mobile menu: the page dimmed and blurred so the menu
+          reads clearly (founders, 2026-11-19); tapping it closes the menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="site-nav-backdrop"
+            aria-hidden="true"
+            onClick={close}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          />
+        )}
+      </AnimatePresence>
       <nav className="site-nav" aria-label="Main">
         <Link href="/" className="site-nav-logo" aria-label="Aripra home">
           {/* Mark + "aripra" word (client, 2026-10-13): Figma "Logo for light
