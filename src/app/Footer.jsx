@@ -39,14 +39,6 @@ function FooterLink({ label, href }) {
   return <Link href={href} className="site-footer-link">{label}</Link>;
 }
 
-function SocialLink({ href, label, className, children }) {
-  return href ? (
-    <a href={href} aria-label={label} className={className} target="_blank" rel="noopener noreferrer">{children}</a>
-  ) : (
-    <span aria-label={label} role="img" className={className}>{children}</span>
-  );
-}
-
 export default function Footer() {
   return (
     <footer className="site-footer">
@@ -70,25 +62,22 @@ export default function Footer() {
         <div className="site-footer-col site-footer-contact">
           <h2 className="site-footer-title">Contact</h2>
           <ul>
-            {/* contact details as supplied by the client (2026-10-09). Phone
-                removed (founders, 2026-11-18: Calendly is the one call to
-                action); the address kept but quieter */}
+            {/* email only (founders, 2026-11-18/19: phone removed, Calendly is
+                the one call to action; the address moved to the small print
+                beside the copyright) */}
             <li>
               <Image src="/home/icon-email.svg" alt="" width={16} height={16} />
               <a href="mailto:contactus@aripratech.com" className="site-footer-link is-nowrap">contactus@aripratech.com</a>
             </li>
-            <li className="is-top is-quiet">
-              <span className="site-footer-icon-pin" aria-hidden="true">
-                <Image src="/home/icon-location.svg" alt="" width={12.1667} height={14.8333} />
-              </span>
-              <span className="site-footer-link">HB-37, Scheme No 94, Musakhedi, Ring Road, Indore</span>
+            {/* LinkedIn styled like the email: small icon + the company name
+                (founders, 2026-11-19; was an icon on its own) */}
+            <li>
+              <Image src="/home/icon-linkedin.svg" alt="" width={16} height={16} />
+              <a href={LINKEDIN_HREF} className="site-footer-link" target="_blank" rel="noopener noreferrer" aria-label="Aripra Infotech Pvt. Ltd. on LinkedIn (opens in a new tab)">
+                Aripra Infotech Pvt. Ltd.
+              </a>
             </li>
           </ul>
-          <div className="site-footer-social">
-            <SocialLink href={LINKEDIN_HREF} label="LinkedIn">
-              <Image src="/home/icon-linkedin.svg" alt="" width={24} height={24} />
-            </SocialLink>
-          </div>
         </div>
       </div>
 
@@ -99,6 +88,8 @@ export default function Footer() {
         <p className="site-footer-copy">
           <Image src="/home/icon-copyright.svg" alt="" width={16} height={16} />
           {new Date().getFullYear()} Aripra. All rights reserved.
+          {/* registered address as small print (founders, 2026-11-19) */}
+          <span className="site-footer-addr"><span className="site-footer-sep" aria-hidden="true">·</span>HB-37, Scheme No 94, Musakhedi, Ring Road, Indore</span>
         </p>
       </div>
     </footer>
