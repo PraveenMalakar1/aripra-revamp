@@ -7,11 +7,13 @@ import { useInView } from 'motion/react';
 // slide right to left endlessly at SPEED; the arrows glide it one card either
 // way (STEP_MS), then the auto-scroll carries on from there. Paused while
 // hovered, keyboard-focused or off screen. Reduced motion: no auto-scroll,
-// arrows jump without the glide. `row` and `clone` are the same card list
+// arrows jump without the glide. Swipe / drag: the row follows the finger
+// (or mouse), then the auto-scroll carries on (founders, 2026-11-19). `row` and `clone` are the same card list
 // (the clone, aria-hidden, makes the loop seamless). Styles: .hm-vrow-* in
 // home.css.
 const SPEED = 45; // px per second
 const STEP_MS = 500;
+const RESUME_MS = 1500; // after a swipe, wait this long before drifting again
 
 const Arrow = ({ flip }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={flip ? { transform: 'scaleX(-1)' } : undefined}>
@@ -62,6 +64,34 @@ export default function VoicesMarquee({ row, clone }) {
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  // swipe / drag: horizontal moves drag the row; vertical ones are left to
+  // the page (touch-action: pan-y in CSS)
+  const drag = useRef(null);
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    const st = s.current;
+    st.anim = null;
+    drag.current = { id: e.pointerId, x0: e.clientX, start: st.x, moved: false };
+    hold.current = true;
+  };
+  const onPointerMove = (e) => {
+    const d = drag.current;
+    if (!d || d.id !== e.pointerId) return;
+    const dx = e.clientX - d.x0;
+    if (!d.moved && Math.abs(dx) > 6) {
+      d.moved = true;
+      e.currentTarget.setPointerCapture?.(e.pointerId);
+    }
+    if (d.moved) s.current.x = d.start + dx;
+  };
+  const endDrag = (e) => {
+    const d = drag.current;
+    if (!d || d.id !== e.pointerId) return;
+    drag.current = null;
+    // touch: let the drift resume shortly; mouse: on leave (onMouseLeave)
+    if (e.pointerType !== 'mouse') setTimeout(() => { if (!drag.current) hold.current = false; }, RESUME_MS);
+  };
+
   // glide to the next / previous card (+1 / -1): its left edge lands on the
   // content edge (the section's left), whatever the cards' widths
   const step = (dir) => {
@@ -87,7 +117,16 @@ export default function VoicesMarquee({ row, clone }) {
       onFocus={(e) => { if (e.target.matches(':focus-visible')) hold.current = true; }}
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) hold.current = false; }}
     >
-      <div ref={wrap} className="hm-vrow-viewport" role="group" aria-label="Client testimonials">
+      <div
+        ref={wrap}
+        className="hm-vrow-viewport"
+        role="group"
+        aria-label="Client testimonials"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+      >
         <div ref={track} className="hm-vrow-track">{row}{clone}</div>
       </div>
       <div className="hm-vrow-nav">

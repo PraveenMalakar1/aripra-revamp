@@ -14,10 +14,12 @@ import KeyStat from '../case-studies/KeyStat';
 // linking to the detail page. Under the cards, one line: the carousel
 // controls and "See all our work →".
 // Auto-advances every STEP_MS; paused while hovered, keyboard-focused or off
-// screen, and never with reduced motion. Styles: .csx-* in home.css.
+// screen, and never with reduced motion. Swipe left / right on the cards to
+// move one either way (founders, 2026-11-19). Styles: .csx-* in home.css.
 
 const STUDIES = CASE_STUDIES.filter((s) => s.href);
 const STEP_MS = 3000;
+const SWIPE_PX = 40; // horizontal distance that counts as a swipe
 const name = (s) => (s.client ? `${s.client} · ${s.project}` : s.project);
 
 const Arrow = ({ flip }) => (
@@ -57,6 +59,32 @@ export default function CaseShowcase() {
     return () => clearTimeout(t);
   }, [active, hold, inView, n]);
 
+  // swipe: a horizontal move over SWIPE_PX moves one card; vertical moves
+  // stay with the page (touch-action: pan-y in CSS). A swipe doesn't also
+  // open the card under the finger.
+  const swipe = useRef(null);
+  const onPointerDown = (e) => {
+    if (e.pointerType === 'mouse') return; // desktop has the arrows
+    swipe.current = { id: e.pointerId, x0: e.clientX, y0: e.clientY, done: false };
+    setHold(true);
+  };
+  const onPointerMove = (e) => {
+    const sw = swipe.current;
+    if (!sw || sw.id !== e.pointerId || sw.done) return;
+    const dx = e.clientX - sw.x0;
+    if (Math.abs(dx) > SWIPE_PX && Math.abs(dx) > Math.abs(e.clientY - sw.y0)) {
+      sw.done = true;
+      setActive((a) => (a + (dx < 0 ? 1 : -1) + n) % n);
+    }
+  };
+  const onPointerEnd = (e) => {
+    const sw = swipe.current;
+    if (!sw || sw.id !== e.pointerId) return;
+    setTimeout(() => { swipe.current = null; }, 0); // after the click that may follow
+    setHold(false);
+  };
+  const onClickCapture = (e) => { if (swipe.current?.done) { e.preventDefault(); e.stopPropagation(); } };
+
   return (
     <div
       ref={ref}
@@ -66,7 +94,15 @@ export default function CaseShowcase() {
       onFocus={(e) => { if (e.target.matches(':focus-visible')) setHold(true); }}
       onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setHold(false); }}
     >
-      <ul ref={stage} className="csx-stage">
+      <ul
+        ref={stage}
+        className="csx-stage"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerEnd}
+        onPointerCancel={onPointerEnd}
+        onClickCapture={onClickCapture}
+      >
         {STUDIES.map((s, i) => {
           let off = i - active;
           if (off > n / 2) off -= n;
