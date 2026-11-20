@@ -62,9 +62,9 @@ export default function Footer() {
         <div className="site-footer-col site-footer-contact">
           <h2 className="site-footer-title">Contact</h2>
           <ul>
-            {/* email only (founders, 2026-11-18/19: phone removed, Calendly is
-                the one call to action; the address moved to the small print
-                beside the copyright) */}
+            {/* email + LinkedIn only (founders: phone removed 2026-11-18,
+                Calendly is the one call to action; address removed from the
+                footer completely 2026-11-20) */}
             <li>
               <Image src="/home/icon-email.svg" alt="" width={16} height={16} />
               <a href="mailto:contactus@aripratech.com" className="site-footer-link is-nowrap">contactus@aripratech.com</a>
@@ -88,8 +88,6 @@ export default function Footer() {
         <p className="site-footer-copy">
           <Image src="/home/icon-copyright.svg" alt="" width={16} height={16} />
           {new Date().getFullYear()} Aripra. All rights reserved.
-          {/* registered address as small print (founders, 2026-11-19) */}
-          <span className="site-footer-addr"><span className="site-footer-sep" aria-hidden="true">·</span>HB-37, Scheme No 94, Musakhedi, Ring Road, Indore</span>
         </p>
       </div>
     </footer>

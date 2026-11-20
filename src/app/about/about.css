@@ -82,15 +82,16 @@ html.fo-lock { overflow: hidden; }
   .fo-panel[open], .fo-panel.is-closing, .fo-panel::backdrop { animation: none; }
 }
 
-/* ---- 3. how we're set up (shared .hm-dark-panel + .hm-glass) ---- */
+/* ---- 3. how we're set up (shared .hm-dark-panel; About AW-4 copy as centred prose) ---- */
 .ab-setup { margin-top: 40px; margin-bottom: 40px; }
 .ab-setup-inner { width: min(964px, 100% - 2 * clamp(24px, 4vw, 60px)); display: flex; flex-direction: column; gap: 40px; }
 .ab-setup-head { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
 .ab-setup-title { margin: 0; color: #fff; font-size: 40px; font-weight: 600; line-height: 1.3; text-wrap: balance; }
-.ab-setup-copy { display: flex; flex-direction: column; gap: 20px; font-size: 16px; line-height: 1.5; text-align: center; } /* centred (founders) */
+.ab-setup-copy { display: flex; flex-direction: column; gap: 24px; width: min(760px, 100%); margin-inline: auto; color: rgba(255, 255, 255, 0.85); font-size: 18px; line-height: 1.6; text-align: center; text-wrap: pretty; } /* centred (founders) */
 .ab-setup-copy p { margin: 0; }
-.ab-setup-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin: 0; padding: 0; list-style: none; }
-.ab-setup-card { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px; }
+/* "Every person in this company is an AI engineer. / Including the people who run it." */
+.ab-setup-copy .ab-setup-highlight { display: flex; flex-direction: column; gap: 4px; color: #fff; font-size: 24px; font-weight: 700; line-height: 1.35; letter-spacing: -0.01em; }
+.ab-setup-highlight span { color: #C9B6FF; }
 
 
 /* ---- 4. who we work with ---- */
@@ -98,13 +99,9 @@ html.fo-lock { overflow: hidden; }
 .ab-who-inner { display: flex; flex-direction: column; gap: 30px; }
 .ab-who-head { display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 900px; margin-inline: auto; text-align: center; }
 .ab-who-lead { margin: 0; color: var(--brand-ink); font-size: 18px; line-height: 1.5; }
-.ab-who-traits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 0; padding: 0; list-style: none; }
-.ab-who-trait { display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 16px; background: #FAF7FF; box-shadow: inset 0 0 0 1px #EDE8FF; }
-.ab-who-trait-title { margin: 0; color: #6C47FF; font-size: 18px; font-weight: 700; line-height: 1.5; }
-.ab-who-trait-text { margin: 0; color: var(--brand-ink); font-size: 14px; line-height: 1.5; }
-.ab-who-closer { margin: 0; color: var(--brand-navy); font-size: 18px; font-weight: 500; line-height: 1.5; text-wrap: pretty; }
-.ab-who-closer p { margin: 0; }
-.ab-who-closer p + p { margin-top: 12px; }
+.ab-who-body { display: flex; flex-direction: column; gap: 18px; width: 100%; color: var(--brand-ink); font-size: 18px; line-height: 1.6; text-align: center; text-wrap: pretty; } /* one continuous read across the full content width (About AW-4; founders, 2026-11-20) */
+.ab-who-body p { margin: 0; }
+.ab-who-body .ab-who-strong { color: var(--brand-navy); font-weight: 700; }
 
 /* ---- 5. the team ---- */
 /* Figma uses a pattern fill (source not exportable); recreated as a CSS dot grid */
@@ -116,10 +113,6 @@ html.fo-lock { overflow: hidden; }
 
 @media (max-width: 1100px) {
   .ab-setup-title { font-size: 34px; }
-  .ab-setup-cards { gap: 24px; }
-}
-@media (max-width: 1100px) {
-  .ab-who-traits { grid-template-columns: 1fr; gap: 16px; }
 }
 @media (max-width: 720px) {
   .ab-hero-lead { font-size: 16px; }
@@ -129,10 +122,10 @@ html.fo-lock { overflow: hidden; }
   .ab-setup { margin-top: 24px; margin-bottom: 24px; }
   .ab-setup-inner { gap: 28px; }
   .ab-setup-title { font-size: 28px; }
-  .ab-setup-cards { grid-template-columns: 1fr; gap: 16px; }
+  .ab-setup-copy { font-size: 16px; }
+  .ab-setup-copy .ab-setup-highlight { font-size: 20px; }
   .ab-who { padding: 32px 0; }
-  .ab-who-lead, .ab-who-closer { font-size: 16px; }
-  .ab-who-traits { grid-template-columns: 1fr; gap: 16px; }
+  .ab-who-lead, .ab-who-body { font-size: 16px; }
   .ab-team { padding: 40px 0; }
   .ab-team-head { gap: 20px; }
 }

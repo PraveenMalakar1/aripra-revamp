@@ -32,12 +32,12 @@ const MOMENTS = [
     image: '/home/moment-grow.png',
   },
   {
-    // new in copy v4. TODO: needs its own photo; for now moment-grow.png
-    // mirrored (moment-scale.png)
+    // new in copy v4; its own photo since 2026-11-20 (founders: no repeated
+    // photos across the cards)
     id: 'scaling',
     title: 'You’ve outgrown what you built on.',
     text: 'It worked when the business was smaller. Now there are more locations, more transactions, more people. And the system underneath it all was never built for this scale.',
-    image: '/home/moment-scale.png',
+    image: '/home/moment-outgrown.png',
   },
 ];
 

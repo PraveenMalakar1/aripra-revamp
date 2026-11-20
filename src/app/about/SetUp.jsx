@@ -1,22 +1,10 @@
-import Image from 'next/image';
 import CircuitBg from '../_shared/CircuitBg';
 
-// "// HOW WE’RE SET UP" (Figma 677:228; copy AW-04, split verbatim across the
-// heading, lead and the two glass cards). Icons: Figma shows the same rocket
-// twice; the second card uses the headset icon until the final one is supplied.
-const POINTS = [
-  {
-    icon: '/home/icon-deploy.svg',
-    title: 'Clients don’t get handed off.',
-    text: 'There’s no translation layer between you and the engineers.',
-  },
-  {
-    icon: '/home/icon-support.svg',
-    title: 'You speak directly to the people writing your code.',
-    text: 'From the first conversation to the last commit.',
-  },
-];
-
+// "HOW WE'RE SET UP" (Figma 677:228). Copy verbatim from About AW-4
+// (2026-11-20; replaces the earlier heading + two glass cards, whose wording
+// was a split of the older copy): heading, the "no account managers" line,
+// the two highlighted lines, then the closing line. Centred prose on the
+// dark panel. Styles: .ab-setup-* in about.css.
 export default function SetUp() {
   return (
     <section className="ab-setup hm-dark-panel has-circuit" aria-labelledby="ab-setup-title">
@@ -25,21 +13,23 @@ export default function SetUp() {
         <div className="ab-setup-head hm-reveal">
           <p className="hm-overline hm-dark-panel-overline">HOW WE’RE SET UP</p>
           <h2 id="ab-setup-title" className="ab-setup-title">
-            Everyone at Aripra builds.
+            Everyone at Aripra builds. Not just the engineers on your project. Everyone.
           </h2>
         </div>
         <div className="ab-setup-copy hm-reveal">
-          <p><strong>The people you talk to are the people doing the work.</strong></p>
+          <p>
+            There are no account managers here. No project managers sitting between you and the people writing your
+            code. No one translating between you and the engineers.
+          </p>
+          <p className="ab-setup-highlight">
+            Every person in this company is an AI engineer.
+            <span>Including the people who run it.</span>
+          </p>
+          <p>
+            That’s not a pitch. It’s how we’re set up. Clients don’t get handed off. The people you talk to are the
+            people doing the work.
+          </p>
         </div>
-        <ul className="ab-setup-cards">
-          {POINTS.map((p) => (
-            <li key={p.title} className="ab-setup-card hm-glass hm-reveal">
-              <Image src={p.icon} alt="" width={50} height={50} />
-              <h3 className="hm-glass-title">{p.title}</h3>
-              <p className="hm-glass-text">{p.text}</p>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
