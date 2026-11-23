@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import CookieSettingsLink from './_shared/CookieSettingsLink';
 
 // Shared site footer (2026 Figma, node 457:243). Styles: globals.css (.site-footer).
 // Items with href: null have no destination yet and render as plain text
@@ -88,6 +89,8 @@ export default function Footer() {
         <p className="site-footer-copy">
           <Image src="/home/icon-copyright.svg" alt="" width={16} height={16} />
           {new Date().getFullYear()} Aripra. All rights reserved.
+          <span className="site-footer-sep" aria-hidden="true">·</span>
+          <CookieSettingsLink className="site-footer-cookie" />
         </p>
       </div>
     </footer>

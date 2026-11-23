@@ -36,7 +36,7 @@ export default function ServicesPage() {
           </PageHero>
 
           {/* "How we build" removed: not in the services doc (founders, 2026-11-04);
-              HowWeBuild.jsx is parked */}
+              its component was deleted 2026-11-23 (still in git history) */}
 
           {/* the "Four services…" bridge was removed (founders, 2026-11-02) */}
 

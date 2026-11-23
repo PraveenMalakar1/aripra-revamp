@@ -131,6 +131,9 @@ html, body { background: #EEEEF2; }
 .site-footer .site-footer-icon-pin { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
 .site-footer .site-footer-contact .site-footer-link { flex: 1; min-width: 0; overflow-wrap: break-word; }
 .site-footer .site-footer-contact .site-footer-link.is-nowrap { white-space: nowrap; }
+.site-footer .site-footer-sep { margin-inline: 4px; }
+.site-footer .site-footer-cookie { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.site-footer .site-footer-cookie:hover { color: var(--brand-navy); }
 .site-footer :focus-visible { outline: 2px solid var(--brand-orange); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .site-footer .site-footer-link { transition: none; } }
 /* faded "aripra" wordmark: top 100px of the 219px-tall vector, copyright over it */

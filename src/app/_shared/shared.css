@@ -298,3 +298,21 @@
 .vp-seek::-moz-range-track { height: 4px; border-radius: 4px; background: linear-gradient(90deg, var(--brand-orange) var(--p), rgba(255, 255, 255, 0.35) var(--p)); }
 .vp-seek::-webkit-slider-thumb { width: 12px; height: 12px; margin-top: -4px; border: 0; border-radius: 50%; background: #fff; appearance: none; }
 .vp-seek::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: #fff; }
+
+/* ---- 404 page (app/not-found.js; founders, 2026-11-23) ---- */
+.nf-lead { margin: 0; max-width: 560px; color: var(--brand-ink); font-size: 18px; line-height: 1.5; text-wrap: balance; }
+.nf-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px; }
+.nf-help { margin: 8px 0 0; color: #71717A; font-size: 15px; line-height: 1.5; }
+.nf-help a { color: var(--brand-navy); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 720px) { .nf-lead { font-size: 16px; } .nf-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; } }
+
+/* ---- cookie consent banner (ConsentBanner.jsx; founders, 2026-11-23) ---- */
+.ck { position: fixed; z-index: 80; right: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 16px; width: min(440px, calc(100vw - 32px)); padding: 20px 22px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px #EDE8FF, 0 18px 40px rgba(17, 2, 59, 0.18); font-family: var(--font-brand); animation: ck-in 300ms var(--ease-out-soft) both; }
+.ck-text { margin: 0; color: var(--brand-ink); font-size: 14px; line-height: 1.55; text-wrap: pretty; }
+.ck-text strong { display: block; margin-bottom: 4px; color: var(--brand-navy); font-size: 15px; }
+.ck-actions { display: flex; gap: 10px; }
+.ck-btn { flex: 1 1 0; justify-content: center; }
+html[data-cookie-banner] .totop { visibility: hidden; } /* the banner takes its corner until a choice is made */
+@keyframes ck-in { from { opacity: 0; transform: translateY(12px); } }
+@media (max-width: 720px) { .ck { left: 16px; right: 16px; bottom: 16px; width: auto; } } /* desktop: bottom right (founders, 2026-11-23) */
+@media (prefers-reduced-motion: reduce) { .ck { animation: none; } }

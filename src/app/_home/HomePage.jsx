@@ -1,9 +1,8 @@
 import Nav from '../Nav';
 import Footer from '../Footer';
 import MotionProvider from '../_shared/MotionProvider';
-// Earlier heroes, parked, not on the site: Hero.jsx (option A, 2026-10-30)
-// and HeroFounder.jsx (option D, 2026-11-04). To bring one back, import it and
-// put it in place of <HeroBento />.
+// Earlier hero designs (Hero.jsx, HeroFounder.jsx) were deleted 2026-11-23;
+// they're in git history if ever needed.
 import HeroBento from './HeroBento';
 import StatsBrand from './StatsBrand';
 import Situation from './Situation';
