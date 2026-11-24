@@ -14,8 +14,8 @@ cd /var/www
 git clone <repo-url> aripra-revamp
 cd aripra-revamp
 
-# Env vars (if any) — .env* is gitignored, so create it on the server
-# nano .env.production
+# Env vars — .env* is gitignored, so create it on the server from the sample
+cp .env.example .env.production   # then edit: nano .env.production
 
 # First build + start
 bash scripts/deploy.sh
