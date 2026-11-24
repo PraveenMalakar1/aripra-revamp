@@ -16,7 +16,7 @@ const inter = Inter({
 // Site-wide defaults; each page sets its own title / description / share card
 // (_shared/seo.js). metadataBase turns the pages' relative share URLs into
 // full ones on the live domain (SITE_URL). The share image is
-// app/opengraph-image.js.
+// app/opengraph-image.png.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_NAME,

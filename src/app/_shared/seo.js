@@ -3,9 +3,9 @@ import { SITE_NAME } from './company';
 // Page metadata with matching share-card fields (founders, 2026-11-23: links
 // shared on LinkedIn / WhatsApp / Slack showed no preview). Each page passes
 // its own title, description and path; the share image is the site-wide
-// app/opengraph-image.js. A page's `openGraph` replaces the layout's, so the
+// app/opengraph-image.png (a fixed file: generating it during the build failed now and then, 2026-11-24). A page's `openGraph` replaces the layout's, so the
 // shared fields (site name, type) and the share image are repeated here.
-const SHARE_IMAGE = { url: '/opengraph-image', width: 1200, height: 630, alt: 'Aripra: AI-Native Engineering. Built for Founders.' };
+const SHARE_IMAGE = { url: '/opengraph-image.png', width: 1200, height: 630, alt: 'Aripra: AI-Native Engineering. Built for Founders.' };
 
 export function pageMeta({ title, description, path }) {
   return {
