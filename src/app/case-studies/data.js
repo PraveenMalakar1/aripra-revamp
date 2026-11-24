@@ -24,11 +24,11 @@ export const CASE_STUDIES = [
     slug: 'route-portal',
     client: 'CarPlanet',
     project: 'Route Portal',
-    title: 'From driver fraud and manual payments to a transport operation that runs itself.',
+    title: 'From manual payments and no visibility to a transport operation that runs itself.', // homepage copy, 2026-11-24
     industry: 'Automotive / Fleet operations',
     services: 'Operations software · AI engineering',
     context: 'Fraud was invisible. Payments were calculated by hand. Driver costs were out of control.',
-    highlights: [{ value: '£60,000', label: 'saved per month' }, { value: '3', label: 'fraud schemes closed automatically' }],
+    highlights: [{ value: '£60,000', label: 'saved per month' }, { value: '3', label: 'irregular billing patterns caught and closed automatically' }],
     href: '/case-studies/route-portal',
     image: '/case-studies/route-portal.png',
   },
