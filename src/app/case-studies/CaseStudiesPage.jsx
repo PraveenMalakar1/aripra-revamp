@@ -4,12 +4,12 @@ import Nav from '../Nav';
 import Footer from '../Footer';
 import MotionProvider from '../_shared/MotionProvider';
 import PageHero from '../_shared/PageHero';
-import { CASE_STUDIES } from './data';
+import { PUBLISHED_CASE_STUDIES } from './data';
 import KeyStat from './KeyStat';
 import '../_shared/shared.css';
 import './case-studies-page.css';
 
-function CaseCard({ study }) {
+export function CaseCard({ study }) {
   const { client, project, title, industry, services, context, highlights, image, href } = study;
   return (
     <li className="cs-card hm-reveal">
@@ -60,7 +60,7 @@ export default function CaseStudiesPage() {
 
           <section className="cs-grid-section" aria-label="Case studies">
             <ul className="hm-wrap cs-grid">
-              {CASE_STUDIES.map((s) => <CaseCard key={s.slug} study={s} />)}
+              {PUBLISHED_CASE_STUDIES.map((s) => <CaseCard key={s.slug} study={s} />)}
               {/* "and many more" tile fills the grid's last slot (founders,
                   2026-10-30; was a separate band under the grid) */}
               <li className="cs-more hm-reveal">

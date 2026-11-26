@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useInView } from 'motion/react';
-import { CASE_STUDIES } from '../case-studies/data';
+import { PUBLISHED_CASE_STUDIES } from '../case-studies/data';
 import KeyStat from '../case-studies/KeyStat';
 import MomentsCarousel from './MomentsCarousel';
 
@@ -21,7 +21,7 @@ import MomentsCarousel from './MomentsCarousel';
 // swiping with momentum and the slow drift (founders, 2026-11-19).
 // Styles: .csx-* in home.css.
 
-const STUDIES = CASE_STUDIES.filter((s) => s.href);
+const STUDIES = PUBLISHED_CASE_STUDIES.filter((s) => s.href);
 const STEP_MS = 3000;
 const SWIPE_PX = 40; // horizontal distance that counts as a swipe
 const name = (s) => (s.client ? `${s.client} · ${s.project}` : s.project);
@@ -31,7 +31,7 @@ function CardBody({ s }) {
   return (
     <>
       <span className="csx-logo">
-        <Image src={s.image} alt={`${s.project} logo`} fill sizes="420px" />
+        {s.image && <Image src={s.image} alt={`${s.project} logo`} fill sizes="420px" />}
       </span>
       <span className="csx-card-body">
         <span className="csx-card-name">{name(s)}</span>

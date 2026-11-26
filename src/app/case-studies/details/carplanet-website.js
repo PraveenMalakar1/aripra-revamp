@@ -1,10 +1,10 @@
 // CarPlanet Website: copy AW-CS-04 | CarPlanet: Website (generated from the Word doc, text as supplied).
 // Sharing permission: Open
-// TODO (from the doc, not published): Still needed: Tasleem quote. All stats verified against Analytics — confirm before publishing.
+// TODO (from the doc, not published): Still needed: Tasleem quote. All stats verified against Analytics - confirm before publishing.
 const carPlanetWebsite = {
   "slug": "carplanet-website",
   "name": "CarPlanet Website",
-  "badge": "Client Story — CarPlanet Website",
+  "badge": "Client Story - CarPlanet Website",
   "title": "31,000 visitors a year. Then we rebuilt it. Now it’s 434,000 in six months.",
   "subtitle": "CarPlanet’s old website worked. Google couldn’t see it. Customers couldn’t find it. Leads were leaking everywhere.",
   "description": "CarPlanet’s old website worked. Google couldn’t see it. Customers couldn’t find it. Leads were leaking everywhere.",

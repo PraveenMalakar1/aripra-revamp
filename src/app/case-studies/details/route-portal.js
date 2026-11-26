@@ -5,7 +5,7 @@
 const routePortal = {
   "slug": "route-portal",
   "name": "Route Portal",
-  "badge": "Client Story — Route Portal",
+  "badge": "Client Story - Route Portal",
   "title": "Every driver. Tracked. Every job. Verified.",
   "subtitle": "AI catches what managers can’t watch. Route Portal closed the gaps in CarPlanet’s transport operation.",
   "description": "AI catches what managers can’t watch. Route Portal closed the gaps in CarPlanet’s transport operation.",
@@ -47,7 +47,7 @@ const routePortal = {
   ],
   "problem": [
     "CarPlanet’s transport operation was running on trust. Drivers created their own jobs, managers approved them, and payments were calculated by hand. Nobody was watching closely enough.",
-    "The system had no way to verify whether jobs were completed correctly. Duplicate submissions, passengers listed on multiple jobs simultaneously, photos of the wrong vehicles — none of it was visible from the top.",
+    "The system had no way to verify whether jobs were completed correctly. Duplicate submissions, passengers listed on multiple jobs simultaneously, photos of the wrong vehicles - none of it was visible from the top.",
     "Driver pay was calculated by the hour, regardless of how efficiently a driver worked. The business was paying for shift time, not output. There was no live visibility into where the fleet was, which cars were arriving where, or how long branches would be waiting."
   ],
   "builtIntro": "Route Portal manages every stage of CarPlanet’s transport operation, from job creation to payment.",
@@ -99,7 +99,7 @@ const routePortal = {
   "facts": [
     [
       "Product",
-      "Route Portal — Driver Operations and Transport Management"
+      "Route Portal - Driver Operations and Transport Management"
     ],
     [
       "Geography",

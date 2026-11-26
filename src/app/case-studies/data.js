@@ -7,6 +7,11 @@
 // `highlights`: the key numbers (homepage copy v4, 2026-11-04), value +
 // label; a highlight without a value is a plain line. Shown on the homepage
 // carousel and the Our Work cards alike (KeyStat.jsx).
+// `draft: true` (founders, 2026-11-25): a case study waiting for the client's
+// approval. It stays off the homepage, the Our Work page and the sitemap, and
+// its own address is a 404; it is only shown at the private link
+// /preview/<previewToken> (app/preview), to send to the client. To publish:
+// delete `draft` and `previewToken` (the private link then stops working).
 export const CASE_STUDIES = [
   {
     slug: 'audiofy',
@@ -45,15 +50,15 @@ export const CASE_STUDIES = [
     image: '/case-studies/carplanet-website.png',
   },
   {
-    slug: 'cardaddy',
+    slug: 'cardaddys',
     client: 'CarPlanet',
-    project: 'CarDaddy',
+    project: 'Cardaddys' /* client's spelling, 2026-11-26 */,
     title: 'From spreadsheets and WhatsApp to an end-to-end car acquisition pipeline.',
     industry: 'Automotive / Car buying',
     services: 'Operations software · Automation',
     context: 'Every stage of the buying operation leaked time. Eligibility was checked manually. Valuations were sent by hand.',
     highlights: [{ value: '74%', label: 'of leads screened out automatically, no agent involved' }],
-    href: '/case-studies/cardaddy',
+    href: '/case-studies/cardaddys',
     image: '/case-studies/cardaddy.png',
   },
   {
@@ -68,4 +73,23 @@ export const CASE_STUDIES = [
     href: '/case-studies/casebriefco',
     image: '/case-studies/casebriefco.png',
   },
+  {
+    slug: 'lumabooth',
+    client: 'LumaSoft',
+    project: 'LumaBooth',
+    // DRAFT card copy (not in the AW-CS-06 doc): headline, subheadline and
+    // stats taken from the case study itself, until the founders send card copy
+    title: 'Every event. Branded. Every device. One app.',
+    industry: 'Events / Photo booth software',
+    services: 'App development',
+    context: 'LumaBooth grew from a lighter iPad app into one full-featured, best-selling photo booth on iPad, iPhone and Mac, at a fraction of the price of competitor booth apps.',
+    highlights: [{ value: '4.6★', label: 'App Store rating' }, { value: '1,600+', label: 'App Store reviews' }],
+    href: '/case-studies/lumabooth',
+    image: null, // LumaSoft logo to come
+    draft: true,
+    previewToken: '96ceb27e0e',
+  },
 ];
+
+// what the homepage and the Our Work page show
+export const PUBLISHED_CASE_STUDIES = CASE_STUDIES.filter((s) => !s.draft);

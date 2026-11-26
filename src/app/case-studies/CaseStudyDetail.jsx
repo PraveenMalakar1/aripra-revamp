@@ -7,6 +7,7 @@ import PageHero from '../_shared/PageHero';
 import StatNumber from '../_shared/StatNumber';
 import BackStrip from './BackNav';
 import { CASE_STUDIES } from './data';
+import { CaseCard } from './CaseStudiesPage';
 import '../_shared/shared.css';
 import './case-study-detail.css';
 
@@ -21,10 +22,13 @@ import './case-study-detail.css';
 // (shown as-is, e.g. "3:27"); quote and facts are optional.
 const paras = (list, className) => list.map((p) => <p key={p.slice(0, 40)} className={className}>{p}</p>);
 
-export default function CaseStudyDetail({ study }) {
+// `preview`: the private client preview (app/preview): adds the study's
+// Our Work card at the end, so the client approves both.
+export default function CaseStudyDetail({ study, preview = false }) {
   const { slug, name, badge, title, subtitle, stats, client, problem, builtIntro, features, outcome, quote, facts } = study;
   // the project image (logo) is shared with the listing card (./data.js)
-  const image = CASE_STUDIES.find((c) => c.slug === slug)?.image;
+  const card = CASE_STUDIES.find((c) => c.slug === slug);
+  const image = card?.image;
   return (
     <MotionProvider>
       <div className="site-page">
@@ -124,6 +128,18 @@ export default function CaseStudyDetail({ study }) {
                   <span className="cd-back-arrow" aria-hidden="true">←</span> Back to case studies
                 </Link>
               </div>
+            </section>
+          )}
+
+          {preview && card && (
+            <section className="cd-section cd-preview" aria-labelledby="cd-preview-title">
+              <div className="hm-wrap cd-col">
+                <h2 id="cd-preview-title" className="cd-h2 hm-reveal">How it will appear on our Our Work page</h2>
+                <p className="cd-lead hm-reveal">This is a private preview. The case study isn’t public yet.</p>
+              </div>
+              <ul className="hm-wrap cs-grid cd-preview-grid">
+                <CaseCard study={{ ...card, href: '#cd-title' }} />
+              </ul>
             </section>
           )}
         </main>

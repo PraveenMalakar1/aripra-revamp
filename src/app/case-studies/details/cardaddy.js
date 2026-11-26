@@ -1,13 +1,13 @@
-// CarDaddy: copy AW-CS-05 | CarPlanet: CarDaddy + Buyer Portal (generated from the Word doc, text as supplied).
+// Cardaddys: copy AW-CS-05 | CarPlanet: Cardaddys + Buyer Portal (generated from the Word doc, text as supplied).
 // Sharing permission: Confirm with Tasleem before publishing
 // TODO (from the doc, not published): INTERNAL: Confirm sharing permission with Tasleem before publishing. Client quote still needed.
 const carDaddy = {
-  "slug": "cardaddy",
-  "name": "CarDaddy",
-  "badge": "Client Story — CarDaddy",
+  "slug": "cardaddys",
+  "name": "Cardaddys",
+  "badge": "Client Story - Cardaddys",
   "title": "From private seller to CarPlanet inventory. Automated.",
-  "subtitle": "CarDaddy manages the entire car acquisition pipeline: valuation, scheduling, pickup. No manual bottlenecks.",
-  "description": "CarDaddy manages the entire car acquisition pipeline: valuation, scheduling, pickup. No manual bottlenecks.",
+  "subtitle": "Cardaddys manages the entire car acquisition pipeline: valuation, scheduling, pickup. No manual bottlenecks.",
+  "description": "Cardaddys manages the entire car acquisition pipeline: valuation, scheduling, pickup. No manual bottlenecks.",
   "stats": [
     {
       "value": 7057,
@@ -38,16 +38,16 @@ const carDaddy = {
     }
   ],
   "client": [
-    "CarPlanet does not just sell used cars. They buy them directly from private sellers to stock their own inventory. That acquisition process is its own operation: leads, valuations, buyer visits, deals, pickups. Before CarDaddy, it ran on spreadsheets, calls, and WhatsApp with no system behind it."
+    "CarPlanet does not just sell used cars. They buy them directly from private sellers to stock their own inventory. That acquisition process is its own operation: leads, valuations, buyer visits, deals, pickups. Before Cardaddys, it ran on spreadsheets, calls, and WhatsApp with no system behind it."
   ],
   "problem": [
     "CarPlanet’s buying team was working without infrastructure. Leads came in from multiple sources with no central place to manage them. Every vehicle had to be manually assessed for eligibility. Valuations were calculated by hand and sent individually. Buyers had no system to plan their day or manage their routes. Once a deal was done, coordinating the pickup was yet another manual process.",
     "At scale, the operation could not hold. Every stage leaked time, and errors in valuation directly hit margin."
   ],
-  "builtIntro": "CarDaddy connects two products: a seller-facing valuation website and an internal buyer portal.",
+  "builtIntro": "Cardaddys connects two products: a seller-facing valuation website and an internal buyer portal.",
   "features": [
     {
-      "title": "CarDaddy’s — the seller-facing website",
+      "title": "Cardaddys - the seller-facing website",
       "body": [
         "Private sellers enter their registration and mileage and receive a valuation. Before a human ever sees the lead, the system screens the vehicle automatically against CarPlanet’s buying criteria.",
         "Vehicles are rejected instantly if they fall outside the parameters: mileage over 100,000 or under 10,000, older than 10 years, last keeper under 6 months, valuation outside £7,000 to £20,000, retail value over £20,000, electric, red paint, write-off category S, Jaguar diesel, Land Rover, or the seller more than 90 miles from head office. If the car does not qualify, it does not proceed. No agent time wasted."
@@ -56,7 +56,7 @@ const carDaddy = {
     {
       "title": "Automated valuation",
       "body": [
-        "Qualifying vehicles are valued using an internal pricing matrix built on AutoTrader’s retail pricing and ratings data. The system calculates a CarDaddy offer price in a median of 0.59 seconds. Call agents can adjust based on condition and the conversation. The final offer goes to the seller via WhatsApp."
+        "Qualifying vehicles are valued using an internal pricing matrix built on AutoTrader’s retail pricing and ratings data. The system calculates a Cardaddys offer price in a median of 0.59 seconds. Call agents can adjust based on condition and the conversation. The final offer goes to the seller via WhatsApp."
       ]
     },
     {
@@ -68,7 +68,7 @@ const carDaddy = {
     {
       "title": "Call system integration",
       "body": [
-        "Agents work directly from the platform. Telephony is built in — calls are placed within the portal, logs and recordings captured automatically. WhatsApp is handled through SuperChat, which manages message volume to protect CarPlanet’s account rating."
+        "Agents work directly from the platform. Telephony is built in - calls are placed within the portal, logs and recordings captured automatically. WhatsApp is handled through SuperChat, which manages message volume to protect CarPlanet’s account rating."
       ]
     },
     {
@@ -85,14 +85,14 @@ const carDaddy = {
     }
   ],
   "outcome": [
-    "7,057 leads a month. 74% screened out automatically — no agent involved. About 1,840 clear screening. Of those, roughly 85 become purchased cars.",
+    "7,057 leads a month. 74% screened out automatically - no agent involved. About 1,840 clear screening. Of those, roughly 85 become purchased cars.",
     "There is no AI in this system. The filtering is a deterministic rules engine: same decision every time, under a second, no model to tune, no edge cases to guard against. That is deliberate. When the rules are clear, rules are better.",
     "Agents spend time on leads that have already been qualified. Valuations land in under a second. The buyer team has a structured daily schedule. When a deal closes, the car moves directly into the fleet system. The manual coordination that held this operation together is gone."
   ],
   "facts": [
     [
       "Product",
-      "CarDaddy + Buyer Portal — Car Acquisition Platform"
+      "Cardaddys + Buyer Portal - Car Acquisition Platform"
     ],
     [
       "Status",

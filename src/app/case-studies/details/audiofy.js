@@ -1,10 +1,10 @@
 // Audiofy (client spelling; the docs say "Audify"): copy AW-CS-01 | CarPlanet: Audiofy (generated from the Word doc, text as supplied).
 // Sharing permission: Open
-// TODO (from the doc, not published): Still needed: Tasleem quote. All stats are monthly averages, approximate — confirm before publishing.
+// TODO (from the doc, not published): Still needed: Tasleem quote. All stats are monthly averages, approximate - confirm before publishing.
 const audiofy = {
   "slug": "audiofy",
   "name": "Audiofy",
-  "badge": "Client Story — Audiofy",
+  "badge": "Client Story - Audiofy",
   "title": "Every call. Scored. Every agent. Accountable.",
   "subtitle": "AI listens to every call. Management finally knows what’s happening on the floor.",
   "description": "AI listens to every call. Management finally knows what’s happening on the floor.",
@@ -92,7 +92,7 @@ const audiofy = {
   "facts": [
     [
       "Product",
-      "Audiofy — AI Call Intelligence Platform"
+      "Audiofy - AI Call Intelligence Platform"
     ],
     [
       "Status",

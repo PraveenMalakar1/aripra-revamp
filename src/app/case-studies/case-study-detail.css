@@ -99,3 +99,6 @@
 .cd-strip-sep { color: #A1A1AA; }
 .cd-strip-current { min-width: 0; overflow: hidden; color: var(--brand-ink); white-space: nowrap; text-overflow: ellipsis; }
 @media (prefers-reduced-motion: reduce) { .cd-strip-link span { transition: none; } }
+
+/* private client preview (app/preview): the study's Our Work card, centred */
+.cs-grid.cd-preview-grid { grid-template-columns: minmax(0, 380px); justify-content: center; margin-top: 32px; }

@@ -4,7 +4,7 @@
 const caseBriefCo = {
   "slug": "casebriefco",
   "name": "CaseBriefCo",
-  "badge": "Client Story — CaseBriefCo",
+  "badge": "Client Story - CaseBriefCo",
   "title": "A library of legal knowledge. Now online, searchable, and powered by AI.",
   "subtitle": "CaseBriefCo turned a lawyer’s physical archive into a subscription platform used by law students across the US.",
   "description": "CaseBriefCo turned a lawyer’s physical archive into a subscription platform used by law students across the US.",
@@ -36,7 +36,7 @@ const caseBriefCo = {
   "builtIntro": "Aripra built two websites for this client.",
   "features": [
     {
-      "title": "CaseBriefCo — the subscription study platform",
+      "title": "CaseBriefCo - the subscription study platform",
       "body": [
         "A structured legal study platform for law students preparing for the Bar exam. Content is organised across five categories: Case Briefs, Outlines, Exam Writing, Flash Cards, and a Legal Dictionary. Case briefs are searchable by subject area (Administrative Law, Criminal Law, Oil and Gas, and more), by year of law school, and alphabetically. Subscriptions are managed through Stripe at $14 per month or $90 per year. US-only geo-targeting was configured to keep the audience focused."
       ]
@@ -44,13 +44,13 @@ const caseBriefCo = {
     {
       "title": "AI legal research tool",
       "body": [
-        "Built directly into the platform. Students query a case — name, citation, or subject — and get an AI-generated response from the platform’s knowledge base. For cases requiring verified citations, the tool switches to live lookup and returns sourced results. It works the way legal research actually works: ask a question, get an answer, verify the source."
+        "Built directly into the platform. Students query a case - name, citation, or subject - and get an AI-generated response from the platform’s knowledge base. For cases requiring verified citations, the tool switches to live lookup and returns sourced results. It works the way legal research actually works: ask a question, get an answer, verify the source."
       ]
     },
     {
       "title": "Book e-commerce site",
       "body": [
-        "A separate website for selling the client’s physical books — the same material, in print. Standard purchase flow with postal and courier integration for US delivery. Books priced individually. Both sites share the same content architecture but serve different buyer intents."
+        "A separate website for selling the client’s physical books - the same material, in print. Standard purchase flow with postal and courier integration for US delivery. Books priced individually. Both sites share the same content architecture but serve different buyer intents."
       ]
     }
   ],
@@ -60,7 +60,7 @@ const caseBriefCo = {
   "facts": [
     [
       "Product",
-      "CaseBriefCo — Legal Study Platform + Book E-commerce"
+      "CaseBriefCo - Legal Study Platform + Book E-commerce"
     ],
     [
       "Geography",

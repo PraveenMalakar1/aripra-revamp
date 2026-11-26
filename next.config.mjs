@@ -19,6 +19,8 @@ const nextConfig = {
     return [
       { source: '/work', destination: '/case-studies', permanent: true },
       { source: '/our-work', destination: '/case-studies', permanent: true },
+      // the client's name is Cardaddys (2026-11-26); the old address keeps working
+      { source: '/case-studies/cardaddy', destination: '/case-studies/cardaddys', permanent: true },
     ];
   },
   images: {
