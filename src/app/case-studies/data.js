@@ -27,7 +27,7 @@ export const CASE_STUDIES = [
     title: 'From manual payments and no visibility to a transport operation that runs itself.', // homepage copy, 2026-11-24
     industry: 'Automotive / Fleet operations',
     services: 'Operations software · AI engineering',
-    context: 'Fraud was invisible. Payments were calculated by hand. Driver costs were out of control.',
+    context: 'Payments were calculated by hand. Billing patterns were invisible. Driver costs were out of control.', // founders, 2026-11-26
     highlights: [{ value: '£60,000', label: 'saved per month' }, { value: '3', label: 'irregular billing patterns caught and closed automatically' }],
     href: '/case-studies/route-portal',
     image: '/case-studies/route-portal.png',
