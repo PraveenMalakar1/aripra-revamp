@@ -1,8 +1,9 @@
 // LumaBooth: copy AW-CS-06 | LumaSoft: LumaBooth (generated from the Word doc, text as supplied).
 // Sharing permission: Open. DRAFT: private preview only until the client approves (see ../data.js `draft`).
-// TODO (from the doc, not published): LumaSoft logo; client quote from MS (LumaSoft); confirm naming and sharing permission with client.
+// TODO (from the doc, not published): client quote from MS (LumaSoft); confirm naming and sharing permission with client.
 const lumaBooth = {
   "slug": "lumabooth",
+  "layout": "sidebar",
   "name": "LumaBooth",
   "badge": "Client Story - LumaBooth",
   "title": "Every event. Branded. Every device. One app.",

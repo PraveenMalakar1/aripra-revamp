@@ -85,7 +85,7 @@ export const CASE_STUDIES = [
     context: 'LumaBooth grew from a lighter iPad app into one full-featured, best-selling photo booth on iPad, iPhone and Mac, at a fraction of the price of competitor booth apps.',
     highlights: [{ value: '4.6★', label: 'App Store rating' }, { value: '1,600+', label: 'App Store reviews' }],
     href: '/case-studies/lumabooth',
-    image: null, // LumaSoft logo to come
+    image: '/case-studies/lumabooth.png', // logo supplied 2026-11-27
     draft: true,
     previewToken: '96ceb27e0e',
   },

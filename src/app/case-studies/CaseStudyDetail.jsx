@@ -25,13 +25,16 @@ const paras = (list, className) => list.map((p) => <p key={p.slice(0, 40)} class
 // `preview`: the private client preview (app/preview): adds the study's
 // Our Work card at the end, so the client approves both.
 export default function CaseStudyDetail({ study, preview = false }) {
-  const { slug, name, badge, title, subtitle, stats, client, problem, builtIntro, features, outcome, quote, facts } = study;
+  const { slug, name, badge, title, subtitle, stats, client, problem, builtIntro, features, outcome, quote, facts, layout } = study;
+  // layout 'sidebar' (LumaBooth only, founders' review 2026-11-27): story on
+  // the left, a sticky "at a glance" card (logo + build facts) on the right
+  const sidebar = layout === 'sidebar';
   // the project image (logo) is shared with the listing card (./data.js)
   const card = CASE_STUDIES.find((c) => c.slug === slug);
   const image = card?.image;
   return (
     <MotionProvider>
-      <div className="site-page">
+      <div className={sidebar ? 'site-page cd-layout-sidebar' : 'site-page'}>
         <Nav />
         <main>
           {/* headline, subheadline and stats all in the first screen
@@ -59,6 +62,9 @@ export default function CaseStudyDetail({ study, preview = false }) {
             <p className="cd-subtitle">{subtitle}</p>
           </PageHero>
 
+          {/* cd-body / cd-main: plain wrappers, styled only in the sidebar layout */}
+          <div className="cd-body">
+          <div className="cd-main">
           <section className="cd-section" aria-label="The client and the problem">
             <div className="hm-wrap cd-col">
               {/* heading centred above the text + logo row (founders, 2026-10-19) */}
@@ -130,6 +136,24 @@ export default function CaseStudyDetail({ study, preview = false }) {
               </div>
             </section>
           )}
+          </div>
+          {sidebar && (
+            <aside className="cd-aside" aria-label="At a glance">
+              {image && (
+                <div className="cd-aside-logo">
+                  <Image src={image} alt="" fill sizes="340px" />
+                </div>
+              )}
+              {facts && (
+                <dl className="cd-aside-facts">
+                  {facts.map(([label, value]) => (
+                    <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+                  ))}
+                </dl>
+              )}
+            </aside>
+          )}
+          </div>
 
           {preview && card && (
             <section className="cd-section cd-preview" aria-labelledby="cd-preview-title">
